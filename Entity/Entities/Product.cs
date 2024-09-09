@@ -26,7 +26,7 @@ namespace Entity.Entities
         public Guid SellerId { get; set; }
 
 
-        public AppUser Seller { get; set; }     
-        public Category Category { get; set; }
+        public virtual AppUser Seller { get; set; }     
+        public virtual Category Category { get; set; }
     }
 }
