@@ -16,4 +16,10 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Initialization\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
