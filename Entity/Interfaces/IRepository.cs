@@ -11,7 +11,7 @@ namespace Entity.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync(
             Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             params Expression<Func<T, object>>[] includes
         );
 
@@ -19,8 +19,8 @@ namespace Entity.Interfaces
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
 
         Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteByIdAsync(Guid id);
-        Task DeleteAsync(T entity);
+        Task<int> UpdateAsync(T entity);
+        Task<int> DeleteAsync(Guid id);
+        Task<int> DeleteAsync(T entity);
     }
 }
