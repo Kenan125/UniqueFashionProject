@@ -14,5 +14,6 @@ namespace Entity.Interfaces
         Task<Guid?> FindUserIdByUserNameAsync(string username);
         Task<bool> RefundGameAsync(Guid userId, Guid gameId);
         Task<bool> UpdateUserProfileAsync(Guid userId, UserDto model);
+        
     }
 }

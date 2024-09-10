@@ -22,7 +22,8 @@ namespace Entity.Entities
         public string Brand { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
-        public List<string> ImageUrls { get; set; }
+        public string PrimaryImageUrl { get; set; }
+        public List<string> ImageUrls { get; set; } = new List<string>();
         public Guid SellerId { get; set; }
 
 

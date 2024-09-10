@@ -14,7 +14,7 @@ namespace Entity.Interfaces
         Task<string> LoginAsync(LoginDto model);
         Task<UserDto> FindByUserNameAsync(string name);
         Task<UserDto> FindByIdAsync(Guid userId);
-        Task<List<UserDto>> GetAllUsers();
+        Task<List<UserDto>> GetAllUsersAsync();
         Task<string> SaveProfilePictureAsync(IFormFile formFile);
         
     }
