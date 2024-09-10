@@ -364,3 +364,20 @@ FodyWeavers.xsd
 Migrations/
 frontend/node_modules
 frontend/dist
+.idea/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Vite-specific directories
+dist-ssr
+*.local
+
+# Editor-specific files
+.vscode/*
+!.vscode/extensions.json
