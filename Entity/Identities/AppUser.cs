@@ -16,8 +16,10 @@ namespace Entity.Identities
         public string? ProfilePictureUrl { get; set; }
         public Gender Gender { get; set; }
 
-
+        
         public ICollection<Order> Orders { get; set; }
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<ShippingAddress> ShippingAddresses { get; set; }
+
     }
 }

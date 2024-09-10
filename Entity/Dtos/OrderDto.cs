@@ -15,6 +15,9 @@ namespace Entity.Dtos
         public decimal TotalPrice { get; set; }
         public bool IsDiscountApplied { get; set; }
         public bool IsFullyrefunded { get; set; } = false;
+        public Guid ShippingAddressId { get; set; }
+
+        public virtual ShippingAddressDto ShippingAddress { get; set; }
         public virtual List<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
         public virtual UserDto User { get; set; }
     }

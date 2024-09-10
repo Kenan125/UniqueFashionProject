@@ -14,6 +14,9 @@ namespace Entity.Entities
         public decimal TotalPrice { get; set; }
         public bool IsDiscountApplied { get; set; }
         public bool IsFullyrefunded { get; set; } = false;
+        public Guid ShippingAddressId { get; set; }
+
+        public virtual ShippingAddress ShippingAddress { get; set; }
         public virtual List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public virtual AppUser User { get; set; }
 

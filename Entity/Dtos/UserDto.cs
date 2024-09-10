@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entity.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace Entity.Dtos
         public string? ProfilePictureUrl { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
 
-        
+        public ICollection<OrderDto> Orders { get; set; }
+        public ICollection<ReviewDto> Reviews { get; set; }
+        public ICollection<ShippingAddressDto> ShippingAddresses { get; set; }
+
+
     }
 }
