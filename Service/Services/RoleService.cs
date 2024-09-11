@@ -1,5 +1,9 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using Entity.Dtos;
+using Entity.Identities;
 using Entity.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,36 +12,88 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
+    
     public class RoleService : IRoleService
     {
-        public Task<bool> AssignRoleToUserAsync(Guid userId, string roleName)
+        private readonly RoleManager<AppRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
+
+        public RoleService(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _mapper = mapper;
         }
 
-        public Task<bool> AssignSellerRoleAsync(Guid userId)
+        public async Task<bool> AssignRoleToUserAsync(string userId, string roleName)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            return result.Succeeded;
         }
 
-        public Task<string> CreateRoleAsync(RoleDto model)
+        public async Task<bool> AssignSellerRoleAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await AssignRoleToUserAsync(userId.ToString(), "Seller");
         }
 
-        public Task DeleteRoleAsync(RoleDto model)
+        public async Task<string> CreateRoleAsync(RoleDto model)
         {
-            throw new NotImplementedException();
+            string message = string.Empty;
+            var roleExists = await _roleManager.RoleExistsAsync(model.Name);
+            if (!roleExists)
+            {
+                var role = new AppRole()
+                {
+                    Name = model.Name,
+                    
+                };
+                var result = await _roleManager.CreateAsync(role);
+                if (result.Succeeded)
+                {
+                    message = "Role created successfully.";
+                }
+                else
+                {
+                    message = string.Join(", ", result.Errors.Select(e => e.Description));
+                }
+            }
+            else
+            {
+                message = "Role already exists.";
+            }
+            return message;
         }
 
-        public Task<List<RoleDto>> GetAllRolesAsync()
+        public async Task DeleteRoleAsync(string id)
         {
-            throw new NotImplementedException();
+            var role = await _roleManager.FindByIdAsync(id);
+            await _roleManager.DeleteAsync(role);
         }
 
-        public Task<bool> RemoveRoleFromUserAsync(Guid userId, string roleName)
+        public async Task<List<RoleDto>> GetAllRolesAsync()
         {
-            throw new NotImplementedException();
+            var roles = await _roleManager.Roles.ToListAsync();
+            var roleViewModels = _mapper.Map<List<RoleDto>>(roles);
+            return roleViewModels;
+        }
+
+        public async Task<bool> RemoveRoleFromUserAsync(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            return result.Succeeded;
         }
     }
 }

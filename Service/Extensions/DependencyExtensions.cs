@@ -4,6 +4,7 @@ using Entity.Identities;
 using Entity.Interfaces;
 using Entity.UnitOfWorks;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Initialization;
 using Service.Mapping;
 using Service.Services;
 using System;

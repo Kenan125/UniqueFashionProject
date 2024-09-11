@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Entity.Identities
 {
     public class AppRole : IdentityRole<Guid>
-    {               
+    {
+        
     }
 }

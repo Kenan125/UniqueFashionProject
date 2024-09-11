@@ -10,10 +10,10 @@ namespace Entity.Interfaces
     public interface IRoleService
     {
         Task<string> CreateRoleAsync(RoleDto model);
-        Task DeleteRoleAsync(RoleDto model);
+        Task DeleteRoleAsync(string id);
         Task<List<RoleDto>> GetAllRolesAsync();
-        Task<bool> AssignRoleToUserAsync(Guid userId, string roleName);
-        Task<bool> RemoveRoleFromUserAsync(Guid userId, string roleName);
+        Task<bool> AssignRoleToUserAsync(string userId, string roleName);
+        Task<bool> RemoveRoleFromUserAsync(string userId, string roleName);
         Task<bool> AssignSellerRoleAsync(Guid userId);
     }
 }

@@ -21,13 +21,13 @@ namespace Service.Initialization
         {
             if (!await _roleManager.RoleExistsAsync("Admin"))
             {
-                var role = new AppRole { Name = "Admin"};
+                var role = new AppRole { Name = "Admin" };
                 await _roleManager.CreateAsync(role);
             }
 
             if (!await _roleManager.RoleExistsAsync("User"))
             {
-                var role = new AppRole { Name = "User"};
+                var role = new AppRole { Name = "User" };
                 await _roleManager.CreateAsync(role);
             }
             if (!await _roleManager.RoleExistsAsync("Seller"))
