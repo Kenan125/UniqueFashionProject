@@ -49,6 +49,7 @@ namespace Service.Extensions
             services.AddScoped<IShippingAddressService, ShippingAddressService>();
             services.AddScoped<ISizeService, SizeService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<RoleInitializer>();
         }

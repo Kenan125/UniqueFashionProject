@@ -13,7 +13,7 @@ namespace Entity.Entities
         
 
         public Guid? ParentCategoryId { get; set; }
-        public Category? ParentCategory { get; set; }
+        public virtual Category ParentCategory { get; set; }
 
         public ICollection<Category> ChildCategories { get; set; } = new List<Category>();
 

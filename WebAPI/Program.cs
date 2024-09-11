@@ -9,17 +9,25 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddDbContext<UniqueFashionDbContext>(
-             options =>
-             options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")
-              ));
+builder.Services.AddDbContext<UniqueFashionDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr"), sqlOptions =>
+    {
+        sqlOptions.CommandTimeout(180); // Increase timeout to 180 seconds (or adjust as necessary)
+    });
+});
 builder.Services.AddExtensions();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddJwtSettings(builder.Configuration);
+
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage(); // This will show detailed error pages
+}
 using (var scope = app.Services.CreateScope())
 {
     var roleInitializer = scope.ServiceProvider.GetRequiredService<RoleInitializer>();

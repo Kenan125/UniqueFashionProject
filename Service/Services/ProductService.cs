@@ -54,8 +54,8 @@ namespace Service.Services
                 filter: g => includeDeleted || !g.IsDeleted, // Include soft-deleted games based on the flag
                 includes: new Expression<Func<Product, object>>[]
                 {
-            
-            g => g.Reviews,
+            g => g.Brand,
+            g => g.Seller,           
             g => g.Category,
             g=> g.Size
             
