@@ -1,16 +1,11 @@
-﻿using Entity.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entity.Entities;
 
 namespace Entity.Interfaces
 {
     public interface IOrderDetailService
     {
-        Task<OrderDto> GetOrderDetailByIdAsync(Guid orderDetailId);
-        Task<bool> RefundOrderDetailAsync(Guid orderDetailId);       
+        Task<OrderDetail> GetOrderDetailByIdAsync(Guid orderDetailId);
+        Task<bool> RefundOrderDetailAsync(Guid orderDetailId);
 
     }
 }

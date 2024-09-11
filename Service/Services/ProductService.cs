@@ -1,63 +1,181 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using Entity.Dtos;
+using Entity.Entities;
 using Entity.Interfaces;
+using Entity.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Service.Services
 {
     public class ProductService : IProductService
     {
-        public Task<bool> AddProductAsync(ProductDto model)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+
+        public ProductService(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<bool> DeleteProductAsync(Guid productId)
+        public async Task<bool> AddProductAsync(ProductDto model)
         {
-            throw new NotImplementedException();
+            var product = _mapper.Map<Product>(model);
+
+            
+
+            await _unitOfWork.GetRepository<Product>().AddAsync(product);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
 
-        public Task<List<ProductDto>> GetAllProductsAsync(bool includeDeleted = false)
+        public async Task<bool> DeleteProductAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Product>();
+
+
+            await repository.DeleteAsync(productId);
+
+            await _unitOfWork.CommitAsync();
+            return true;
         }
 
-        public Task<ProductDto> GetProductByIdAsync(Guid productId)
+        public async Task<List<ProductDto>> GetAllProductsAsync(bool includeDeleted = false)
         {
-            throw new NotImplementedException();
+            var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
+                filter: g => includeDeleted || !g.IsDeleted, // Include soft-deleted games based on the flag
+                includes: new Expression<Func<Product, object>>[]
+                {
+            
+            g => g.Reviews,
+            g => g.Category,
+            g=> g.Size
+            
+                }
+            );
+
+            return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public Task<List<ProductDto>> GetProductsAsync(string searchTerm, int? categoryId, bool includeDeleted)
+        public async Task<ProductDto> GetProductByIdAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Product>();
+            var product = await repository.GetAllAsync(
+                filter: g => g.Id == productId,
+                includes: new Expression<Func<Product, object>>[]
+                {
+            
+                    g => g.Reviews,            
+                    g=>g.Category,
+                    g=>g.Size
+                }
+            );
+
+            if (product == null || !product.Any())
+            {
+                return null;
+            }
+
+            var productDto = _mapper.Map<ProductDto>(product.FirstOrDefault());
+
+            return productDto;
         }
 
-        public Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId)
+        public async Task<List<ProductDto>> GetProductsAsync(string searchTerm, Guid? categoryId, bool includeDeleted)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                return await SearchProductsAsync(searchTerm, includeDeleted);
+            }
+
+            if (categoryId.HasValue)
+            {
+                return await GetProductsByCategoryAsync(categoryId.Value, includeDeleted);
+            }
+
+            return await GetAllProductsAsync(includeDeleted);
         }
 
-        public Task<List<ProductDto>> GetProductsByCategoryAsync(Guid categoryId, bool includeDeleted = false)
+        public async Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId)
         {
-            throw new NotImplementedException();
+            var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
+                filter: g => g.BrandId == brandId
+                
+            );
+
+            return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public Task<List<ProductDto>> SearchProductsAsync(string searchTerm, bool includeDeleted = false)
+        public async Task<List<ProductDto>> GetProductsByCategoryAsync(Guid categoryId, bool includeDeleted = false)
         {
-            throw new NotImplementedException();
+            var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
+                filter: g => (includeDeleted || !g.IsDeleted) && g.CategoryId == categoryId 
+                
+            );
+
+            return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public Task<bool> SoftDeleteProductAsync(Guid productId)
+        public async Task<List<ProductDto>> SearchProductsAsync(string searchTerm, bool includeDeleted = false)
         {
-            throw new NotImplementedException();
+            searchTerm = searchTerm.ToLower();
+
+            var games = await _unitOfWork.GetRepository<Product>().GetAllAsync(
+                filter: g => (includeDeleted || !g.IsDeleted) &&
+                             (g.Name.ToLower().Contains(searchTerm) ||
+                              g.Description.ToLower().Contains(searchTerm)),
+                includes: new Expression<Func<Product, object>>[]
+                {
+            
+            g => g.Reviews,
+            g=> g.Brand
+            
+                }
+            );
+
+            return _mapper.Map<List<ProductDto>>(games);
         }
 
-        public Task<bool> UpdateProductAsync(ProductDto model)
+        public async Task<bool> SoftDeleteProductAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Product>();
+            var product = await repository.GetByIdAsync(productId);
+            if (product == null)
+            {
+                return false;
+            }
+
+            product.IsDeleted = true;
+
+            await repository.UpdateAsync(product);
+
+            await _unitOfWork.CommitAsync();
+
+            return true;
+        }
+
+        public async Task<bool> UpdateProductAsync(ProductDto model)
+        {
+            var product = await _unitOfWork.GetRepository<Product>().GetByIdAsync(model.Id);
+
+            if (product == null)
+                return false;
+
+            _mapper.Map(model, product);
+
+            
+            await _unitOfWork.GetRepository<Product>().UpdateAsync(product);
+            await _unitOfWork.CommitAsync();
+
+            return true;
         }
     }
 }

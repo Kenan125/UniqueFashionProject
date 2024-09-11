@@ -1,5 +1,8 @@
-﻿using Entity.Dtos;
+﻿using DataAccess.Contexts;
+using Entity.Dtos;
+using Entity.Entities;
 using Entity.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +13,29 @@ namespace Service.Services
 {
     public class OrderDetailService : IOrderDetailService
     {
-        public Task<OrderDto> GetOrderDetailByIdAsync(Guid orderDetailId)
+        private readonly UniqueFashionDbContext _context;
+
+        public OrderDetailService(UniqueFashionDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> RefundOrderDetailAsync(Guid orderDetailId)
+        public async Task<OrderDetail> GetOrderDetailByIdAsync(Guid orderDetailId)
         {
-            throw new NotImplementedException();
+            return await _context.OrderDetails.Include(od=>od.Product).FirstOrDefaultAsync(od=>od.Id == orderDetailId);
+                
+        }
+
+        public async Task<bool> RefundOrderDetailAsync(Guid orderDetailId)
+        {
+            var gameSaleDetail = await GetOrderDetailByIdAsync(orderDetailId);
+            if (gameSaleDetail != null && !gameSaleDetail.IsRefunded)
+            {
+                gameSaleDetail.IsRefunded = true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

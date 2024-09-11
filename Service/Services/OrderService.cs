@@ -1,5 +1,9 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using DataAccess.Contexts;
+using Entity.Dtos;
+using Entity.Entities;
 using Entity.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +14,89 @@ namespace Service.Services
 {
     public class OrderService : IOrderService
     {
-        public Task CreateOrderAsync(OrderDto order)
+        private readonly UniqueFashionDbContext _context;
+        private readonly IMapper _mapper;
+
+        public OrderService(UniqueFashionDbContext context, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _mapper = mapper;
         }
 
-        public Task<List<OrderDto>> GetAllOrdersAsync()
+        public async Task CreateOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        public async Task<List<OrderDto>> GetAllOrdersAsync()
         {
-            throw new NotImplementedException();
+            var orders = await _context.Orders
+                .Include(gs => gs.User)
+                .Include(gs => gs.OrderDetails)
+                    .ThenInclude(gsd => gsd.Product)
+                    .ToListAsync();
+
+
+            return _mapper.Map<List<OrderDto>>(orders);
         }
 
-        public Task<int> GetTotalOrdersCountAsync()
+        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
         {
-            throw new NotImplementedException();
+            var order = await _context.Orders
+                .Include(gs => gs.OrderDetails)
+                .ThenInclude(gsd => gsd.Product)
+                .FirstOrDefaultAsync(gs => gs.Id == orderId);
+
+            return order == null ? null : _mapper.Map<OrderDto>(order);
         }
 
-        public Task<decimal> GetTotalRevenueAsync()
+        public async Task<int> GetTotalOrdersCountAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Orders.CountAsync();
         }
 
-        public Task<List<OrderDto>> GetUserPurchasesAsync(Guid userId)
+        public async Task<decimal> GetTotalRevenueAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Orders.SumAsync(gs => gs.TotalPrice);
         }
 
-        public Task<bool> RefundOrderAsync(Guid orderId, Guid? orderDetailId = null)
+        public async Task<List<OrderDto>> GetUserPurchasesAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var orders = await _context.Orders
+                .Include(gs => gs.User)
+                .Include(gs => gs.OrderDetails)
+                    .ThenInclude(gsd => gsd.Product)                   
+                .Where(gs => gs.User.Id == userId)
+                .ToListAsync();
+
+            return _mapper.Map<List<OrderDto>>(orders);
+        }
+
+        public async Task RefundOrderAsync(Guid orderId, Guid? orderDetailId = null)
+        {
+            var order = await GetOrderByIdAsync(orderId);
+            if (order == null) return;
+
+            if (orderDetailId.HasValue)
+            {
+                var gameSaleDetail = order.OrderDetails.FirstOrDefault(gsd => gsd.Id == orderDetailId.Value);
+                if (gameSaleDetail != null && !gameSaleDetail.IsRefunded)
+                {
+                    gameSaleDetail.IsRefunded = true;
+                    
+                }
+            }
+            else
+            {
+                foreach (var detail in order.OrderDetails)
+                {
+                    detail.IsRefunded = true;
+                }
+                
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

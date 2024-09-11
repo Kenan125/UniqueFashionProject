@@ -20,7 +20,7 @@ namespace Entity.Interfaces
         Task<ProductDto> GetProductByIdAsync(Guid productId);
 
         Task<List<ProductDto>> GetAllProductsAsync(bool includeDeleted = false);
-        Task<List<ProductDto>> GetProductsAsync(string searchTerm, int? categoryId, bool includeDeleted);
+        Task<List<ProductDto>> GetProductsAsync(string searchTerm, Guid? categoryId, bool includeDeleted);
 
         Task<List<ProductDto>> SearchProductsAsync(string searchTerm, bool includeDeleted = false);
 

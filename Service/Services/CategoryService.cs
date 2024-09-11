@@ -1,5 +1,8 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using Entity.Dtos;
+using Entity.Entities;
 using Entity.Interfaces;
+using Entity.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +13,50 @@ namespace Service.Services
 {
     public class CategoryService : ICategoryService
     {
-        public Task AddCategoryAsync(CategoryDto model)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public Task DeleteCategoryAsync(Guid categoryId)
+        public async Task AddCategoryAsync(CategoryDto model)
         {
-            throw new NotImplementedException();
+            var category = _mapper.Map<Category>(model);
+            await _unitOfWork.GetRepository<Category>().AddAsync(category);
+            await _unitOfWork.CommitAsync();
         }
 
-        public Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
+        public async Task DeleteCategoryAsync(Guid categoryId)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.GetRepository<Category>().DeleteAsync(categoryId);
+            await _unitOfWork.CommitAsync();
         }
 
-        public Task<CategoryDto> GetCategoryByIdAsync(Guid categoryId)
+        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+            var categoryRepository = _unitOfWork.GetRepository<Category>();
+            var categories = await categoryRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
-        public Task UpdateCategoryAsync(CategoryDto model)
+        public async Task<CategoryDto> GetCategoryByIdAsync(Guid categoryId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Category>();
+            var category = await repository.GetByIdAsync(categoryId);
+            var categoryViewModel = _mapper.Map<CategoryDto>(category);
+            return categoryViewModel;
+        }
+
+        public async Task UpdateCategoryAsync(CategoryDto model)
+        {
+            var category = await _unitOfWork.GetRepository<Category>().GetByIdAsync(model.Id);
+
+            _mapper.Map(model, category);
+            await _unitOfWork.GetRepository<Category>().UpdateAsync(category);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

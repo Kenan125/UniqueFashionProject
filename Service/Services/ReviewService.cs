@@ -1,5 +1,9 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using DataAccess.Contexts;
+using Entity.Dtos;
+using Entity.Entities;
 using Entity.Interfaces;
+using Entity.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +14,52 @@ namespace Service.Services
 {
     public class ReviewService : IReviewService
     {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly UniqueFashionDbContext _context;
+
+        public ReviewService(IUnitOfWork unitOfWork, IMapper mapper, UniqueFashionDbContext context)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _context = context;
+        }
+
         public Task<double> GetAverageRatingByUserIdAsync(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<ReviewDto>> GetReviewsByUserIdAsync(Guid userId)
+        public async Task<List<ReviewDto>> GetReviewsBySellerIdAsync(Guid sellerId)
         {
-            throw new NotImplementedException();
+            var reviews = await _unitOfWork.GetRepository<Review>()
+                                           .GetAllAsync(r => r.SellerId == sellerId);
+
+            foreach (var review in reviews)
+            {
+                _context.Entry(review).Reference(r => r.User).Load();
+            }
+
+            return _mapper.Map<List<ReviewDto>>(reviews);
         }
 
-        public Task<bool> SubmitReviewAsync(ReviewDto reviewModel)
+        public async Task<bool> SubmitReviewAsync(ReviewDto reviewModel)
         {
-            throw new NotImplementedException();
+            if (reviewModel.Rating <= 0)
+            {
+                throw new InvalidOperationException("A star rating is required to submit a review.");
+            }
+
+
+            var review = _mapper.Map<Review>(reviewModel);
+
+
+            review.CreatedDate = DateTime.UtcNow;
+
+
+            await _unitOfWork.GetRepository<Review>().AddAsync(review);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

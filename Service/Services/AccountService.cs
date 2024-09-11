@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,13 +20,15 @@ namespace Service.Services
         private readonly IMapper _mapper;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IAuthService _authService;
 
-        public AccountService(UserManager<AppUser> userManager, IMapper mapper, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager)
+        public AccountService(UserManager<AppUser> userManager, IMapper mapper, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IAuthService authService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _authService = authService;
         }
 
         public async Task<string> CreateUserAsync(RegisterDto model)
@@ -93,17 +96,27 @@ namespace Service.Services
         public async Task<string> LoginAsync(LoginDto model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user == null)
+            if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                return "User not found!";
+                return "Login failed!";
             }
 
-            var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-            if (signInResult.Succeeded)
+            // Create user claims
+            var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
             {
-                return "OK";
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
-            return "Login Failed!";
+
+            // Generate JWT token
+            var token = _authService.GenerateToken(claims);
+            return token;
         }
 
         public async Task<string> SaveProfilePictureAsync(IFormFile formFile)

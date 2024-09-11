@@ -12,8 +12,8 @@ namespace Entity.Interfaces
         Task<List<OrderDto>> GetPurchaseHistoryAsync(Guid userId);
         Task<UserDto> GetUserProfileAsync(Guid userId);
         Task<Guid?> FindUserIdByUserNameAsync(string username);
-        Task<bool> RefundGameAsync(Guid userId, Guid gameId);
-        Task<bool> UpdateUserProfileAsync(Guid userId, UserDto model);
+        Task<bool> RefundProductAsync(Guid userId, Guid gameId);
+        Task<bool> UpdateUserProfileAsync(Guid userId, UserDto model, ChangePasswordDto pswchng);
         
     }
 }
