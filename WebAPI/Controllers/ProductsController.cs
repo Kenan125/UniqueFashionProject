@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
         
-        [HttpGet("all")]        
+        [HttpGet]        
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAllProductsAsync();

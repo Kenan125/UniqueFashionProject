@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entity.Dtos.ProductDtos;
 
-namespace Entity.Dtos
+namespace Entity.Dtos.BrandDtos
 {
-    public class BrandDto : BaseDto
+    public class BrandCreateDto
     {
         public string Name { get; set; }
-        public List<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

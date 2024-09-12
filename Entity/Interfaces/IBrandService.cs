@@ -1,4 +1,4 @@
-﻿using Entity.Dtos;
+﻿using Entity.Dtos.BrandDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Entity.Interfaces
 {
     public interface IBrandService
     {
-        Task<IEnumerable<BrandDto>> GetAllBrandsAsync();
+        Task<IEnumerable<BrandDto>> GetAllBrandsAsync(bool includeDeleted = false);
         Task<BrandDto> GetBrandByIdAsync(Guid brandId);
         Task AddBrandAsync(BrandDto model);
         Task UpdateBrandAsync(BrandDto model);

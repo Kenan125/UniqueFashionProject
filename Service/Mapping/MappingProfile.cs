@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entity.Dtos;
+using Entity.Dtos.BrandDtos;
 using Entity.Dtos.ProductDtos;
 using Entity.Entities;
 using System;
