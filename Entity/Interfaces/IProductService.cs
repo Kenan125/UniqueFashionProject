@@ -5,9 +5,9 @@ namespace Entity.Interfaces
     public interface IProductService
     {
 
-        Task<bool> AddProductAsync(ProductCreateDto model);
+        Task<bool> AddProductAsync(ProductDto model);
 
-        Task<bool> UpdateProductAsync(Guid id, ProductUpdateDto model);
+        Task<bool> UpdateProductAsync(Guid id, ProductDto model);
 
         Task<bool> DeleteProductAsync(Guid productId);
         Task<bool> SoftDeleteProductAsync(Guid productId);

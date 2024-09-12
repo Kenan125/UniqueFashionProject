@@ -1,4 +1,5 @@
 ﻿using Entity.Dtos;
+using Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace Entity.Interfaces
     {
         Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync();
         Task<CategoryDto> GetCategoryByIdAsync(Guid categoryId);
-        Task AddCategoryAsync(CategoryDto model);
-        Task UpdateCategoryAsync(CategoryDto model);
+        Task<bool> AddCategoryAsync(CategoryDto model);
+        Task<bool> UpdateCategoryAsync(Guid id, CategoryDto model);
+        
         Task DeleteCategoryAsync(Guid categoryId);
     }
 }

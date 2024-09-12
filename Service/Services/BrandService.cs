@@ -24,14 +24,26 @@ namespace Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task AddBrandAsync(BrandDto model)
+        public async Task<bool> AddBrandAsync(BrandDto model)
         {
-            throw new NotImplementedException();
+            var brand = _mapper.Map<Brand>(model);
+
+
+
+            await _unitOfWork.GetRepository<Brand>().AddAsync(brand);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
 
-        public Task DeleteBrandAsync(Guid brandId)
+        public async Task<bool> DeleteBrandAsync(Guid brandId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Brand>();
+
+
+            await repository.DeleteAsync(brandId);
+
+            await _unitOfWork.CommitAsync();
+            return true;
         }
 
         public async Task<IEnumerable<BrandDto>> GetAllBrandsAsync(bool includeDeleted = false)
@@ -49,14 +61,45 @@ namespace Service.Services
             return _mapper.Map<List<BrandDto>>(products);
         }
 
-        public Task<BrandDto> GetBrandByIdAsync(Guid brandId)
+        public async Task<BrandDto> GetBrandByIdAsync(Guid brandId)
         {
-            throw new NotImplementedException();
+            var repository = _unitOfWork.GetRepository<Brand>();
+            var product = await repository.GetAllAsync(
+                filter: g => g.Id == brandId,
+                includes: new Expression<Func<Brand, object>>[]
+                {
+
+                    g => g.Products
+                   
+                }
+            );
+
+            if (product == null || !product.Any())
+            {
+                return null;
+            }
+
+            var productDto = _mapper.Map<BrandDto>(product.FirstOrDefault());
+
+            return productDto;
         }
 
-        public Task UpdateBrandAsync(BrandDto model)
+        public async Task<bool> UpdateBrandAsync(Guid id, BrandDto model)
         {
-            throw new NotImplementedException();
+            // Fetch the product using the id from the URL
+            var brand = await _unitOfWork.GetRepository<Brand>().GetByIdAsync(id);
+
+            if (brand == null)
+                return false;
+
+            // Map the updated values from the DTO to the existing product entity
+            _mapper.Map(model, brand);
+
+            // Update the product and commit the changes
+            await _unitOfWork.GetRepository<Brand>().UpdateAsync(brand);
+            await _unitOfWork.CommitAsync();
+
+            return true;
         }
     }
 }

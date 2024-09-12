@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace Entity.Dtos
 {
-    public class CategoryDto : BaseDto
+    public class CategoryDto
     {
+        
         public string Name { get; set; }
         
 
         public Guid? ParentCategoryId { get; set; }
-        public CategoryDto? ParentCategory { get; set; }
+        //public CategoryDto? ParentCategory { get; set; }
 
-        public ICollection<CategoryDto> ChildCategories { get; set; } = new List<CategoryDto>();
+        //public ICollection<CategoryDto> ChildCategories { get; set; } = new List<CategoryDto>();
 
-        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
+        //public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

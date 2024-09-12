@@ -7,9 +7,9 @@ using Entity.Dtos.ProductDtos;
 
 namespace Entity.Dtos.BrandDtos
 {
-    public class BrandDto : BaseDto
+    public class BrandDto
     {
         public string Name { get; set; }
-        public List<ProductDto> Products { get; set; } = new List<ProductDto>();
+        //public List<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

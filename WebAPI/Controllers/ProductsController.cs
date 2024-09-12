@@ -35,8 +35,8 @@ namespace WebAPI.Controllers
             return Ok(product);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin, Seller")]
-        public async Task<IActionResult> AddProduct([FromBody] ProductCreateDto productDto)
+        //[Authorize(Roles = "Admin, Seller")]
+        public async Task<IActionResult> AddProduct([FromBody] ProductDto productDto)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] ProductUpdateDto productDto)
+        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] ProductDto productDto)
         {
             if (!ModelState.IsValid)
             {

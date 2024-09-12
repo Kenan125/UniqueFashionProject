@@ -22,11 +22,12 @@ namespace Service.Services
             _mapper = mapper;
         }
 
-        public async Task AddCategoryAsync(CategoryDto model)
+        public async Task<bool> AddCategoryAsync(CategoryDto model)
         {
             var category = _mapper.Map<Category>(model);
             await _unitOfWork.GetRepository<Category>().AddAsync(category);
             await _unitOfWork.CommitAsync();
+            return true;
         }
 
         public async Task DeleteCategoryAsync(Guid categoryId)
@@ -49,14 +50,17 @@ namespace Service.Services
             var categoryViewModel = _mapper.Map<CategoryDto>(category);
             return categoryViewModel;
         }
+        
 
-        public async Task UpdateCategoryAsync(CategoryDto model)
+
+        public async Task<bool> UpdateCategoryAsync(Guid id, CategoryDto model)
         {
-            var category = await _unitOfWork.GetRepository<Category>().GetByIdAsync(model.Id);
+            var category = await _unitOfWork.GetRepository<Category>().GetByIdAsync(id);
 
             _mapper.Map(model, category);
             await _unitOfWork.GetRepository<Category>().UpdateAsync(category);
             await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

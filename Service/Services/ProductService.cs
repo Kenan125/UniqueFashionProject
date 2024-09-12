@@ -26,7 +26,7 @@ namespace Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> AddProductAsync(ProductCreateDto model)
+        public async Task<bool> AddProductAsync(ProductDto model)
         {
             var product = _mapper.Map<Product>(model);
 
@@ -146,7 +146,7 @@ namespace Service.Services
             return true;
         }
 
-        public async Task<bool> UpdateProductAsync(Guid id, ProductUpdateDto model)
+        public async Task<bool> UpdateProductAsync(Guid id, ProductDto model)
         {
             // Fetch the product using the id from the URL
             var product = await _unitOfWork.GetRepository<Product>().GetByIdAsync(id);
