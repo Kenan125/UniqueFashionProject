@@ -1,4 +1,5 @@
-﻿using Entity.Identities;
+﻿using Entity.Dtos.ProductDtos;
+using Entity.Identities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

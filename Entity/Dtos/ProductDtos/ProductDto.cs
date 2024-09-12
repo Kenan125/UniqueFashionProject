@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Dtos
+namespace Entity.Dtos.ProductDtos
 {
     public class ProductDto : BaseDto
     {

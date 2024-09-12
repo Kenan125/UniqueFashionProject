@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Entity.Dtos;
+using Entity.Dtos.ProductDtos;
 using Entity.Entities;
 using Entity.Interfaces;
 using Entity.UnitOfWorks;
@@ -26,7 +26,7 @@ namespace Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> AddProductAsync(ProductDto model)
+        public async Task<bool> AddProductAsync(ProductCreateDto model)
         {
             var product = _mapper.Map<Product>(model);
 
@@ -89,25 +89,12 @@ namespace Service.Services
             return productDto;
         }
 
-        public async Task<List<ProductDto>> GetProductsAsync(string searchTerm, Guid? categoryId, bool includeDeleted)
-        {
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                return await SearchProductsAsync(searchTerm, includeDeleted);
-            }
+        
 
-            if (categoryId.HasValue)
-            {
-                return await GetProductsByCategoryAsync(categoryId.Value, includeDeleted);
-            }
-
-            return await GetAllProductsAsync(includeDeleted);
-        }
-
-        public async Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId)
+        public async Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId, bool includeDeleted = false)
         {
             var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
-                filter: g => g.BrandId == brandId
+                filter: g => (includeDeleted || !g.IsDeleted) && g.BrandId == brandId
                 
             );
 
@@ -130,14 +117,11 @@ namespace Service.Services
 
             var games = await _unitOfWork.GetRepository<Product>().GetAllAsync(
                 filter: g => (includeDeleted || !g.IsDeleted) &&
-                             (g.Name.ToLower().Contains(searchTerm) ||
-                              g.Description.ToLower().Contains(searchTerm)),
+                             (g.Name.ToLower().Contains(searchTerm)),
                 includes: new Expression<Func<Product, object>>[]
-                {
-            
-            g => g.Reviews,
-            g=> g.Brand
-            
+                {           
+                    g => g.Reviews,
+                    g => g.Brand            
                 }
             );
 
@@ -162,20 +146,23 @@ namespace Service.Services
             return true;
         }
 
-        public async Task<bool> UpdateProductAsync(ProductDto model)
+        public async Task<bool> UpdateProductAsync(Guid id, ProductUpdateDto model)
         {
-            var product = await _unitOfWork.GetRepository<Product>().GetByIdAsync(model.Id);
+            // Fetch the product using the id from the URL
+            var product = await _unitOfWork.GetRepository<Product>().GetByIdAsync(id);
 
             if (product == null)
                 return false;
 
+            // Map the updated values from the DTO to the existing product entity
             _mapper.Map(model, product);
 
-            
+            // Update the product and commit the changes
             await _unitOfWork.GetRepository<Product>().UpdateAsync(product);
             await _unitOfWork.CommitAsync();
 
             return true;
         }
+
     }
 }
