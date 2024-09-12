@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-        [Authorize(Policy = "AdminPolicy")]
+        
         [HttpGet("all")]        
         public async Task<IActionResult> GetAllProducts()
         {
