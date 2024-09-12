@@ -26,6 +26,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SellerPolicy", policy => policy.RequireRole("Seller"));
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+
 });
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

@@ -10,5 +10,6 @@ namespace Entity.Interfaces
     public interface IAuthService
     {
         string GenerateToken(List<Claim> claims);
+        Task<string> AuthenticateAsync(string userName, string password);
     }
 }
