@@ -10,7 +10,11 @@ export default [
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        $: 'readonly', // Add jQuery '$' as a global variable
+        jQuery: 'readonly', // Optionally, you can also add 'jQuery'
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },

@@ -1,14 +1,21 @@
-import { useState } from 'react'
-import './App.css'
+// src/App.js
+
+import { Routes, Route } from 'react-router-dom';
+
+// Import your pages
+
+
+import Home from "./components/pages/Home.jsx";
+// ... other imports
 
 function App() {
-  const [count, setCount] = useState(0)
+    return (
+        <Routes>
+            <Route path="/" element={<Home />} />
 
-  return (
-    <>
-
-    </>
-  )
+            {/* Add other routes as needed */}
+        </Routes>
+    );
 }
 
-export default App
+export default App;
