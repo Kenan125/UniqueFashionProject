@@ -25,10 +25,17 @@ namespace Service.Services
             _context = context;
         }
 
-        public Task<double> GetAverageRatingByUserIdAsync(Guid userId)
+        public async Task<double> GetAverageRatingByUserIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var reviews = await _unitOfWork.GetRepository<Review>().GetAllAsync(r => r.UserId == userId);
+            if (reviews==null || !reviews.Any())
+            {
+                return 0; // No reviews available
+            }
+
+            return reviews.Average(r => r.Rating);
         }
+
 
         public async Task<List<ReviewDto>> GetReviewsBySellerIdAsync(Guid sellerId)
         {

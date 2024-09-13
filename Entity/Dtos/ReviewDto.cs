@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Dtos
 {
-    public class ReviewDto : BaseDto
+    public class ReviewDto
     {
         public Guid ProductId { get; set; }
         public Guid UserId { get; set; }
@@ -18,8 +18,8 @@ namespace Entity.Dtos
         public int Rating { get; set; }
         public string Comment { get; set; }
 
-        public virtual ProductDto Product { get; set; }
-        public virtual UserDto User { get; set; }
-        public virtual Seller Seller { get; set; }
+        //public virtual ProductDto Product { get; set; }
+        //public virtual UserDto User { get; set; }
+        //public virtual Seller Seller { get; set; }
     }
 }

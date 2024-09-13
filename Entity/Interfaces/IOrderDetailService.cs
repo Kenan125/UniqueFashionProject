@@ -7,5 +7,6 @@ namespace Entity.Interfaces
         Task<OrderDetail> GetOrderDetailByIdAsync(Guid orderDetailId);
         Task<bool> RefundOrderDetailAsync(Guid orderDetailId);
 
+
     }
 }
