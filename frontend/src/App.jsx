@@ -6,23 +6,23 @@ import { Routes, Route } from 'react-router-dom';
 
 
 import Home from "./components/pages/Home.jsx";
-import ProductsPage from "./components/pages/ProductsPage.jsx";
-import Preloader from "./components/layout/Preloader.jsx";
+import Layout from "./components/layout/Layout.jsx";
+import Shop from "./components/pages/Shop.jsx";
 // ... other imports
 
 function App() {
     return (
-        <>
-            <Preloader/>
+        <Routes>
+
+            <Route element={<Layout />}>
+
+                <Route path="/" element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
 
 
-            <Routes>
-            <Route path="/" element={<Home />} />
 
-
-        </Routes></>
-
-
+            </Route>
+        </Routes>
     );
 }
 

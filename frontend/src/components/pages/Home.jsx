@@ -6,7 +6,7 @@ import Instagram from "../layout/Instagram.jsx";
 import LatestNews from "../layout/LatestNews.jsx";
 import Footer from "../layout/Footer.jsx";
 import {useEffect} from "react";
-import Preloader from "../layout/Preloader.jsx";
+import Owlcarousel from "../layout/Owlcarousel.jsx";
 
 
 const Home =()=> {
@@ -20,7 +20,8 @@ const Home =()=> {
     return (
         <div>
 
-            <Header/>
+
+            <Owlcarousel/>
             <Banner/>
             <ProductSection/>
             <Categories/>

@@ -18,17 +18,11 @@ function Header() {
                             <div className="header__top__right">
                                 <div className="header__top__links">
                                     <Link to="/signin">Sign in</Link>
-                                    <Link to="/faqs">FAQs</Link>
+                                    <Link to="/register">Register</Link>
                                 </div>
                                 <div className="header__top__hover">
-                  <span>
-                    USD <i className="fas fa-chevron-down"></i>
-                  </span>
-                                    <ul>
-                                        <li>USD</li>
-                                        <li>EUR</li>
-                                        <li>GBP</li>
-                                    </ul>
+
+
                                 </div>
                             </div>
                         </div>
@@ -56,7 +50,7 @@ function Header() {
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/shop">Shop</Link>
+                                    <Link to="/shop">Shop</Link> {/* Ensure it's lowercase /shop */}
                                 </li>
                                 <li>
                                     <Link to="#">Pages</Link>
@@ -98,7 +92,7 @@ function Header() {
                                 <i className="fas fa-heart"></i>
                             </Link>
                             <Link to="/cart">
-                                <i className="fas fa-shopping-bag"></i> <span>0</span>
+                                <img src="/img/icon/cart.png" alt="Cart"  /> <span>0</span>
                             </Link>
                             <div className="price">$0.00</div>
                         </div>
