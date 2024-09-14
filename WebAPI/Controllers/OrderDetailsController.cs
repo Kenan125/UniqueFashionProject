@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         }
         // GET: api/orderdetails/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrderDetailById(Guid id)
+        public async Task<IActionResult> GetOrderDetailById(int id)
         {
             var orderDetail = await _orderDetailService.GetOrderDetailByIdAsync(id);
             if (orderDetail == null)
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
 
         // POST: api/orderdetails/{id}/refund
         [HttpPost("{id}/refund")]
-        public async Task<IActionResult> RefundOrderDetail(Guid id)
+        public async Task<IActionResult> RefundOrderDetail(int id)
         {
             var result = await _orderDetailService.RefundOrderDetailAsync(id);
             if (!result)

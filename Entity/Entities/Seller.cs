@@ -10,7 +10,7 @@ namespace Entity.Entities
     public class Seller : BaseEntity
     {
         public string Name { get; set; }
-        public Guid? UserId { get; set; }
+        public int? UserId { get; set; }
 
         public AppUser User { get; set; }
         public ICollection<Product> Products { get; set; }

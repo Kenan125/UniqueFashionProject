@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Dtos.ProductDtos
+namespace Entity.Dtos
 {
-    public class ProductDto 
+    public class ProductDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -19,14 +19,14 @@ namespace Entity.Dtos.ProductDtos
         public string Condition { get; set; }
         public Gender Gender { get; set; }
         public AgeGroup AgeGroup { get; set; }
-        public Guid CategoryId { get; set; }
-        
-        public Guid BrandId { get; set; }
-        public Guid SizeId { get; set; }
+        public int CategoryId { get; set; }
+
+        public int BrandId { get; set; }
+        public int SizeId { get; set; }
         public string Color { get; set; }
         public string PrimaryImageUrl { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
-        public Guid SellerId { get; set; }
+        public int SellerId { get; set; }
 
         //public virtual SizeDto Size { get; set; }
         //public virtual BrandDto Brand { get; set; }

@@ -1,20 +1,12 @@
-﻿using Entity.Dtos.ProductDtos;
-using Entity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entity.Dtos
+﻿namespace Entity.Dtos
 {
     public class CategoryDto
     {
-        
-        public string Name { get; set; }
-        
 
-        public Guid? ParentCategoryId { get; set; }
+        public string Name { get; set; }
+
+
+        public int? ParentCategoryId { get; set; }
         //public CategoryDto? ParentCategory { get; set; }
 
         //public ICollection<CategoryDto> ChildCategories { get; set; } = new List<CategoryDto>();

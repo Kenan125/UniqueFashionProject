@@ -35,7 +35,7 @@ namespace DataAccess.Repositories
         }
 
         // Delete an entity by ID
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<int> DeleteAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
@@ -74,7 +74,7 @@ namespace DataAccess.Repositories
         }
 
         // Get an entity by ID
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

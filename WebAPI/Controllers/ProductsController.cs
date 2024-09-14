@@ -1,5 +1,4 @@
 ﻿using Entity.Dtos;
-using Entity.Dtos.ProductDtos;
 using Entity.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +24,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(Guid id)
+        public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);
             if (product == null)
@@ -51,7 +50,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] ProductDto productDto)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] ProductDto productDto)
         {
             if (!ModelState.IsValid)
             {
@@ -77,7 +76,7 @@ namespace WebAPI.Controllers
             return Ok(products);
         }
         [HttpGet("category/{categoryId}")]
-        public async Task<IActionResult> GetProductByCategoryId(Guid categoryId, [FromQuery] bool includeDeleted = false)
+        public async Task<IActionResult> GetProductByCategoryId(int categoryId, [FromQuery] bool includeDeleted = false)
         {
             var product = await _productService.GetProductsByCategoryAsync(categoryId, includeDeleted);
             if (product == null || !product.Any())
@@ -87,7 +86,7 @@ namespace WebAPI.Controllers
             return Ok(product);
         }
         [HttpGet("brand/{brandId}")]
-        public async Task<IActionResult> GetProductByBrandId(Guid brandId, [FromQuery] bool includeDeleted = false)
+        public async Task<IActionResult> GetProductByBrandId(int brandId, [FromQuery] bool includeDeleted = false)
         {
             var product = await _productService.GetProductsByBrandAsync(brandId, includeDeleted);
             if (product == null || !product.Any())
@@ -97,7 +96,7 @@ namespace WebAPI.Controllers
             return Ok(product);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var result = await _productService.DeleteProductAsync(id);
 
@@ -109,7 +108,7 @@ namespace WebAPI.Controllers
             return Ok("Product deleted successfully.");
         }
         [HttpPut("softdelete/{productId}")]
-        public async Task<IActionResult> SoftDeleteProduct(Guid productId)
+        public async Task<IActionResult> SoftDeleteProduct(int productId)
         {
             var result = await _productService.SoftDeleteProductAsync(productId);
 

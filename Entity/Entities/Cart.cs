@@ -9,7 +9,7 @@ namespace Entity.Entities
 {
     public class Cart
     {
-        public Guid UserId { get; set; }  // Foreign key to the user       
+        public int UserId { get; set; }  // Foreign key to the user       
         public AppUser User { get; set; }  // Navigation property
         public List<CartItem> Items { get; set; } = new List<CartItem>();
     }

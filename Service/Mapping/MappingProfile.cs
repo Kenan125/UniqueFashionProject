@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Entity.Dtos;
-using Entity.Dtos.BrandDtos;
-using Entity.Dtos.ProductDtos;
 using Entity.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,8 +23,7 @@ namespace Service.Mapping
             CreateMap<Seller, SellerDto>().ReverseMap();
             CreateMap<ShippingAddress, ShippingAddressDto>().ReverseMap();
             CreateMap<Size, SizeDto>().ReverseMap();
-            CreateMap<Product,ProductCreateDto>().ReverseMap();
-            CreateMap<Product,ProductUpdateDto>().ReverseMap();
+            
 
         }
     }

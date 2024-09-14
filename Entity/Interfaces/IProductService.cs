@@ -1,4 +1,4 @@
-﻿using Entity.Dtos.ProductDtos;
+﻿using Entity.Dtos;
 
 namespace Entity.Interfaces
 {
@@ -7,20 +7,20 @@ namespace Entity.Interfaces
 
         Task<bool> AddProductAsync(ProductDto model);
 
-        Task<bool> UpdateProductAsync(Guid id, ProductDto model);
+        Task<bool> UpdateProductAsync(int id, ProductDto model);
 
-        Task<bool> DeleteProductAsync(Guid productId);
-        Task<bool> SoftDeleteProductAsync(Guid productId);
+        Task<bool> DeleteProductAsync(int productId);
+        Task<bool> SoftDeleteProductAsync(int productId);
 
-        Task<ProductDto> GetProductByIdAsync(Guid productId);
+        Task<ProductDto> GetProductByIdAsync(int productId);
 
         Task<List<ProductDto>> GetAllProductsAsync(bool includeDeleted = false);
         
 
         Task<List<ProductDto>> SearchProductsAsync(string searchTerm, bool includeDeleted = false);
 
-        Task<List<ProductDto>> GetProductsByCategoryAsync(Guid categoryId, bool includeDeleted = false);
-        Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId, bool includeDeleted = false);
+        Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId, bool includeDeleted = false);
+        Task<List<ProductDto>> GetProductsByBrandAsync(int brandId, bool includeDeleted = false);
 
     }
 }

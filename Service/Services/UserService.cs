@@ -29,13 +29,13 @@ namespace Service.Services
             _mapper = mapper;
         }
 
-        public async Task<Guid?> FindUserIdByUserNameAsync(string username)
+        public async Task<int?> FindUserIdByUserNameAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
             return user?.Id;
         }
 
-        public async Task<List<OrderDto>> GetPurchaseHistoryAsync(Guid userId)
+        public async Task<List<OrderDto>> GetPurchaseHistoryAsync(int userId)
         {
             var purchaseHistory = await _context.Orders
                 .Include(gs => gs.OrderDetails)
@@ -47,7 +47,7 @@ namespace Service.Services
             return _mapper.Map<List<OrderDto>>(purchaseHistory);
         }
 
-        public async Task<UserDto> GetUserProfileAsync(Guid userId)
+        public async Task<UserDto> GetUserProfileAsync(int userId)
         {
             var user = await _userManager.Users
                 .Where(u => u.Id == userId)
@@ -56,7 +56,7 @@ namespace Service.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<bool> RefundProductAsync(Guid userId, Guid productId)
+        public async Task<bool> RefundProductAsync(int userId, int productId)
         {
             var orderDetail = await _context.OrderDetails
                 .Include(gsd => gsd.Order)
@@ -73,7 +73,7 @@ namespace Service.Services
             return false;
         }
 
-        public async Task<bool> UpdateUserProfileAsync(Guid userId, UserDto model,ChangePasswordDto pswchng)
+        public async Task<bool> UpdateUserProfileAsync(int userId, UserDto model,ChangePasswordDto pswchng)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)

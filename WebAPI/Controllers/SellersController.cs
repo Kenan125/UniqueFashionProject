@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
 
         // GET: api/sellers/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSellerById(Guid id)
+        public async Task<IActionResult> GetSellerById(int id)
         {
             var seller = await _sellerService.GetSellerByIdAsync(id);
             if (seller == null)
@@ -44,7 +44,13 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = model.UserId ?? Guid.Empty; // Assuming UserId is provided
+            if (model.UserId == null)
+            {
+                return BadRequest("UserId cannot be null.");
+            }
+
+            var userId = model.UserId.Value; // Get the non-nullable int value
+
             var success = await _sellerService.CreateSellerAsync(model, userId);
 
             if (!success)
@@ -55,9 +61,10 @@ namespace WebAPI.Controllers
             return Ok("Seller created successfully.");
         }
 
+
         // GET: api/sellers/user/{userId}
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetSellerByUserId(Guid userId)
+        public async Task<IActionResult> GetSellerByUserId(int userId)
         {
             var seller = await _sellerService.GetSellerByUserIdAsync(userId);
             if (seller == null)

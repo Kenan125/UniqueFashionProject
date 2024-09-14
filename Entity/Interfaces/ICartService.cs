@@ -10,11 +10,11 @@ namespace Entity.Interfaces
 {
     public interface ICartService
     {
-        Task AddToCartAsync(Guid userId, Guid gameId, decimal price);  // Changed to Guid
-        Task<Cart> GetCartAsync(Guid userId);  // Changed to Guid
-        Task<CartDto> GetCartViewModelAsync(Guid userId);  // Changed to Guid
-        Task ClearCartAsync(Guid userId);  // Changed to Guid
-        Task<OrderDto?> CheckoutAsync(Guid userId);  // Changed to Guid
-        Task RemoveFromCartAsync(Guid userId, Guid gameId);  // Changed to Guid
+        Task AddToCartAsync(int userId, int gameId, decimal price);  // Changed to Guid
+        Task<Cart> GetCartAsync(int userId);  // Changed to Guid
+        Task<CartDto> GetCartViewModelAsync(int userId);  // Changed to Guid
+        Task ClearCartAsync(int userId);  // Changed to Guid
+        Task<OrderDto?> CheckoutAsync(int userId);  // Changed to Guid
+        Task RemoveFromCartAsync(int userId, int gameId);  // Changed to Guid
     }
 }

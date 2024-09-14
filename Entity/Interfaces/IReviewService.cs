@@ -9,8 +9,8 @@ namespace Entity.Interfaces
 {
     public interface IReviewService
     {
-        Task<List<ReviewDto>> GetReviewsBySellerIdAsync(Guid sellerId);
+        Task<List<ReviewDto>> GetReviewsBySellerIdAsync(int sellerId);
         Task<bool> SubmitReviewAsync(ReviewDto reviewModel);
-        Task<double> GetAverageRatingByUserIdAsync(Guid userId);
+        Task<double> GetAverageRatingByUserIdAsync(int userId);
     }
 }

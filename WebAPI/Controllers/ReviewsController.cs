@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
 
         // GET: api/reviews/seller/{sellerId}
         [HttpGet("seller/{sellerId}")]
-        public async Task<IActionResult> GetReviewsBySeller(Guid sellerId)
+        public async Task<IActionResult> GetReviewsBySeller(int sellerId)
         {
             var reviews = await _reviewService.GetReviewsBySellerIdAsync(sellerId);
             if (reviews == null || reviews.Count == 0)
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
 
         // GET: api/reviews/user/{userId}/rating
         [HttpGet("user/{userId}/rating")]
-        public async Task<IActionResult> GetAverageRatingByUser(Guid userId)
+        public async Task<IActionResult> GetAverageRatingByUser(int userId)
         {
             try
             {

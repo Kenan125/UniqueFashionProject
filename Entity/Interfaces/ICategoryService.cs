@@ -11,10 +11,10 @@ namespace Entity.Interfaces
     public interface ICategoryService
     {
         Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync();
-        Task<CategoryDto> GetCategoryByIdAsync(Guid categoryId);
+        Task<CategoryDto> GetCategoryByIdAsync(int categoryId);
         Task<bool> AddCategoryAsync(CategoryDto model);
-        Task<bool> UpdateCategoryAsync(Guid id, CategoryDto model);
+        Task<bool> UpdateCategoryAsync(int id, CategoryDto model);
         
-        Task DeleteCategoryAsync(Guid categoryId);
+        Task DeleteCategoryAsync(int categoryId);
     }
 }

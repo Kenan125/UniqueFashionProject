@@ -9,7 +9,7 @@ namespace Entity.Entities
 {
     public class ShippingAddress : BaseEntity
     {
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public AppUser User { get; set; }
         public string AddressLine { get; set; }
         public string District { get; set; }

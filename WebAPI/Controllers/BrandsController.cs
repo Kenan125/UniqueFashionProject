@@ -1,4 +1,4 @@
-﻿using Entity.Dtos.BrandDtos;
+﻿using Entity.Dtos;
 using Entity.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             return Ok(products);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBrandById(Guid id)
+        public async Task<IActionResult> GetBrandById(int id)
         {
             var brand = await _brandService.GetBrandByIdAsync(id);
             if (brand == null) { return NotFound(); }
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
             return Ok("Brand created successfully!");
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBrand(Guid id, [FromBody] BrandDto brand)
+        public async Task<IActionResult> UpdateBrand(int id, [FromBody] BrandDto brand)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             return Ok("Product updated successfully!");
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBrand(Guid id)
+        public async Task<IActionResult> DeleteBrand(int id)
         {
             var result = await _brandService.DeleteBrandAsync(id);
             if (!result)

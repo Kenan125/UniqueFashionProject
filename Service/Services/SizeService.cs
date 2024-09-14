@@ -15,7 +15,7 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteSizeAsync(Guid sizeId)
+        public Task DeleteSizeAsync(int sizeId)
         {
             throw new NotImplementedException();
         }
@@ -25,7 +25,7 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<SizeDto> GetSizeByIdAsync(Guid sizeId)
+        public Task<SizeDto> GetSizeByIdAsync(int sizeId)
         {
             throw new NotImplementedException();
         }

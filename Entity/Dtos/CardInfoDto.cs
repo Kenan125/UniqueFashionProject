@@ -2,7 +2,7 @@
 {
     public class CardInfoDto : BaseDto
     {
-        public Guid UserId { get; set; }  // Link to the user who owns the card
+        public int UserId { get; set; }  // Link to the user who owns the card
         public string MaskedCardNumber { get; set; }  // e.g., **** **** **** 1234
         public string CardholderName { get; set; }
         public string ExpirationDate { get; set; }  // Just the month and year

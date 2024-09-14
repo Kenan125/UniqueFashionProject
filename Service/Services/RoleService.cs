@@ -38,7 +38,7 @@ namespace Service.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> AssignSellerRoleAsync(Guid userId)
+        public async Task<bool> AssignSellerRoleAsync(int userId)
         {
             return await AssignRoleToUserAsync(userId.ToString(), "Seller");
         }

@@ -30,7 +30,7 @@ namespace Service.Services
         }
 
         // Fetch seller by ID
-        public async Task<SellerDto> GetSellerByIdAsync(Guid sellerId)
+        public async Task<SellerDto> GetSellerByIdAsync(int sellerId)
         {
             var seller = await _unitOfWork.GetRepository<Seller>().GetByIdAsync(sellerId);
             if (seller == null)
@@ -41,7 +41,7 @@ namespace Service.Services
         }
 
         // Create a new seller
-        public async Task<bool> CreateSellerAsync(SellerDto model, Guid userId)
+        public async Task<bool> CreateSellerAsync(SellerDto model, int userId)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Service.Services
         }
 
         // Fetch seller by UserId
-        public async Task<SellerDto> GetSellerByUserIdAsync(Guid userId)
+        public async Task<SellerDto> GetSellerByUserIdAsync(int userId)
         {
             var sellers = await _unitOfWork.GetRepository<Seller>().GetAllAsync(s => s.UserId == userId);
             var seller = sellers.FirstOrDefault();

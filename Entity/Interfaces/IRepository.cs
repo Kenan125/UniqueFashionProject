@@ -15,12 +15,12 @@ namespace Entity.Interfaces
             params Expression<Func<T, object>>[] includes
         );
 
-        Task<T> GetByIdAsync(Guid id);
+        Task<T> GetByIdAsync(int id);
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
 
         Task AddAsync(T entity);
         Task<int> UpdateAsync(T entity);
-        Task<int> DeleteAsync(Guid id);
+        Task<int> DeleteAsync(int id);
         Task<int> DeleteAsync(T entity);
     }
 }

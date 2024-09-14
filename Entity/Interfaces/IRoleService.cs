@@ -14,6 +14,6 @@ namespace Entity.Interfaces
         Task<List<RoleDto>> GetAllRolesAsync();
         Task<bool> AssignRoleToUserAsync(string userId, string roleName);
         Task<bool> RemoveRoleFromUserAsync(string userId, string roleName);
-        Task<bool> AssignSellerRoleAsync(Guid userId);
+        Task<bool> AssignSellerRoleAsync(int userId);
     }
 }

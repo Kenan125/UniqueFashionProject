@@ -30,7 +30,7 @@ namespace Service.Services
             return true;
         }
 
-        public async Task DeleteCategoryAsync(Guid categoryId)
+        public async Task DeleteCategoryAsync(int categoryId)
         {
             await _unitOfWork.GetRepository<Category>().DeleteAsync(categoryId);
             await _unitOfWork.CommitAsync();
@@ -43,7 +43,7 @@ namespace Service.Services
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
-        public async Task<CategoryDto> GetCategoryByIdAsync(Guid categoryId)
+        public async Task<CategoryDto> GetCategoryByIdAsync(int categoryId)
         {
             var repository = _unitOfWork.GetRepository<Category>();
             var category = await repository.GetByIdAsync(categoryId);
@@ -53,7 +53,7 @@ namespace Service.Services
         
 
 
-        public async Task<bool> UpdateCategoryAsync(Guid id, CategoryDto model)
+        public async Task<bool> UpdateCategoryAsync(int id, CategoryDto model)
         {
             var category = await _unitOfWork.GetRepository<Category>().GetByIdAsync(id);
 

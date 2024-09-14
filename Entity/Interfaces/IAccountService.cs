@@ -13,7 +13,7 @@ namespace Entity.Interfaces
         Task<string> CreateUserAsync(RegisterDto model);
         Task<string> LoginAsync(LoginDto model);
         Task<UserDto> FindByUserNameAsync(string name);
-        Task<UserDto> FindByIdAsync(Guid userId);
+        Task<UserDto> FindByIdAsync(int userId);
         Task<List<UserDto>> GetAllUsersAsync();
         Task<string> SaveProfilePictureAsync(IFormFile formFile);
         

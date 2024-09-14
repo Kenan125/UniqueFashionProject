@@ -41,7 +41,7 @@ namespace Service.Services
             return _mapper.Map<List<OrderDto>>(orders);
         }
 
-        public async Task<OrderDto> GetOrderByIdAsync(Guid orderId)
+        public async Task<OrderDto> GetOrderByIdAsync(int orderId)
         {
             var order = await _context.Orders
                 .Include(gs => gs.OrderDetails)
@@ -61,7 +61,7 @@ namespace Service.Services
             return await _context.Orders.SumAsync(gs => gs.TotalPrice);
         }
 
-        public async Task<List<OrderDto>> GetUserPurchasesAsync(Guid userId)
+        public async Task<List<OrderDto>> GetUserPurchasesAsync(int userId)
         {
             var orders = await _context.Orders
                 .Include(gs => gs.User)
@@ -73,7 +73,7 @@ namespace Service.Services
             return _mapper.Map<List<OrderDto>>(orders);
         }
 
-        public async Task RefundOrderAsync(Guid orderId, Guid? orderDetailId = null)
+        public async Task RefundOrderAsync(int orderId, int? orderDetailId = null)
         {
             var order = await GetOrderByIdAsync(orderId);
             if (order == null) return;

@@ -69,7 +69,7 @@ namespace Service.Services
             return message;
         }
 
-        public async Task<UserDto> FindByIdAsync(Guid userId)
+        public async Task<UserDto> FindByIdAsync(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             return user == null ? null : _mapper.Map<UserDto>(user);

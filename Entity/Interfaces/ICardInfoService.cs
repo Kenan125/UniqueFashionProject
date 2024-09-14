@@ -9,8 +9,8 @@ namespace Entity.Interfaces
 {
     public interface ICardInfoService
     {
-        Task<CardInfoDto> GetCardByUserIdAsync(Guid userId);  // Fetch card by user
+        Task<CardInfoDto> GetCardByUserIdAsync(int userId);  // Fetch card by user
         Task AddCardAsync(CardInfoDto model);  // Add new card info       
-        Task DeleteCardAsync(Guid userId);  // Remove card info by user
+        Task DeleteCardAsync(int userId);  // Remove card info by user
     }
 }

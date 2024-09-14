@@ -18,13 +18,13 @@ namespace Entity.Entities
         public string Condition { get; set; }
         public Gender Gender { get; set; }
         public AgeGroup AgeGroup { get; set; }
-        public Guid CategoryId { get; set; }
-        public Guid BrandId { get; set; }
-        public Guid SizeId { get; set; }
+        public int CategoryId { get; set; }
+        public int BrandId { get; set; }
+        public int SizeId { get; set; }
         public string Color { get; set; }
         public string PrimaryImageUrl { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
-        public Guid SellerId { get; set; }
+        public int SellerId { get; set; }
 
         public virtual Size Size { get; set; }
         public virtual Brand Brand { get; set; }

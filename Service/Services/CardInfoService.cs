@@ -15,12 +15,12 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteCardAsync(Guid userId)
+        public Task DeleteCardAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CardInfoDto> GetCardByUserIdAsync(Guid userId)
+        public Task<CardInfoDto> GetCardByUserIdAsync(int userId)
         {
             throw new NotImplementedException();
         }

@@ -15,12 +15,12 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteShippingAddressAsync(Guid addressId)
+        public Task DeleteShippingAddressAsync(int addressId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ShippingAddressDto> GetShippingAddressByIdAsync(Guid addressId)
+        public Task<ShippingAddressDto> GetShippingAddressByIdAsync(int addressId)
         {
             throw new NotImplementedException();
         }

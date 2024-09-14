@@ -10,9 +10,9 @@ namespace Entity.Interfaces
     public interface ISizeService
     {
         Task CreateSizeAsync(SizeDto model);
-        Task<SizeDto> GetSizeByIdAsync(Guid sizeId);
+        Task<SizeDto> GetSizeByIdAsync(int sizeId);
         Task<List<SizeDto>> GetAllSizesAsync();  // Optionally, get all sizes
         Task UpdateSizeAsync(SizeDto model);
-        Task DeleteSizeAsync(Guid sizeId);
+        Task DeleteSizeAsync(int sizeId);
     }
 }

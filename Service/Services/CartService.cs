@@ -11,32 +11,32 @@ namespace Service.Services
 {
     public class CartService : ICartService
     {
-        public Task AddToCartAsync(Guid userId, Guid gameId, decimal price)
+        public Task AddToCartAsync(int userId, int gameId, decimal price)
         {
             throw new NotImplementedException();
         }
 
-        public Task<OrderDto?> CheckoutAsync(Guid userId)
+        public Task<OrderDto?> CheckoutAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task ClearCartAsync(Guid userId)
+        public Task ClearCartAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Cart> GetCartAsync(Guid userId)
+        public Task<Cart> GetCartAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CartDto> GetCartViewModelAsync(Guid userId)
+        public Task<CartDto> GetCartViewModelAsync(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveFromCartAsync(Guid userId, Guid gameId)
+        public Task RemoveFromCartAsync(int userId, int gameId)
         {
             throw new NotImplementedException();
         }

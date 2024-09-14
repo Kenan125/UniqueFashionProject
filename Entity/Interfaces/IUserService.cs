@@ -9,11 +9,11 @@ namespace Entity.Interfaces
 {
     public interface IUserService
     {
-        Task<List<OrderDto>> GetPurchaseHistoryAsync(Guid userId);
-        Task<UserDto> GetUserProfileAsync(Guid userId);
-        Task<Guid?> FindUserIdByUserNameAsync(string username);
-        Task<bool> RefundProductAsync(Guid userId, Guid gameId);
-        Task<bool> UpdateUserProfileAsync(Guid userId, UserDto model, ChangePasswordDto pswchng);
+        Task<List<OrderDto>> GetPurchaseHistoryAsync(int userId);
+        Task<UserDto> GetUserProfileAsync(int userId);
+        Task<int?> FindUserIdByUserNameAsync(string username);
+        Task<bool> RefundProductAsync(int userId, int gameId);
+        Task<bool> UpdateUserProfileAsync(int userId, UserDto model, ChangePasswordDto pswchng);
         
     }
 }

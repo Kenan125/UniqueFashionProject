@@ -25,7 +25,7 @@ namespace Service.Services
             _context = context;
         }
 
-        public async Task<double> GetAverageRatingByUserIdAsync(Guid userId)
+        public async Task<double> GetAverageRatingByUserIdAsync(int userId)
         {
             var reviews = await _unitOfWork.GetRepository<Review>().GetAllAsync(r => r.UserId == userId);
             if (reviews==null || !reviews.Any())
@@ -37,7 +37,7 @@ namespace Service.Services
         }
 
 
-        public async Task<List<ReviewDto>> GetReviewsBySellerIdAsync(Guid sellerId)
+        public async Task<List<ReviewDto>> GetReviewsBySellerIdAsync(int sellerId)
         {
             var reviews = await _unitOfWork.GetRepository<Review>()
                                            .GetAllAsync(r => r.SellerId == sellerId);

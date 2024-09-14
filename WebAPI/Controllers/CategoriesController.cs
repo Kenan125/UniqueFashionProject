@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
 
         // GET: api/categories/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryById(Guid id)
+        public async Task<IActionResult> GetCategoryById(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
             if (category == null)
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
 
         // PUT: api/categories/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryDto model)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/categories/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(Guid id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _categoryService.GetCategoryByIdAsync(id);
             if (category == null)

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entity.Dtos.ProductDtos;
 
 namespace Entity.Dtos
 {
     public class OrderDetailDto : BaseDto
     {
-        public Guid OrderId { get; set; }
-        public Guid ProductId { get; set; }
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Discount { get; set; }
         public bool IsRefunded { get; set; }

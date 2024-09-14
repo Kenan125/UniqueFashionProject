@@ -20,13 +20,13 @@ namespace Service.Services
             _context = context;
         }
 
-        public async Task<OrderDetail> GetOrderDetailByIdAsync(Guid orderDetailId)
+        public async Task<OrderDetail> GetOrderDetailByIdAsync(int orderDetailId)
         {
             return await _context.OrderDetails.Include(od=>od.Product).FirstOrDefaultAsync(od=>od.Id == orderDetailId);
                 
         }
 
-        public async Task<bool> RefundOrderDetailAsync(Guid orderDetailId)
+        public async Task<bool> RefundOrderDetailAsync(int orderDetailId)
         {
             var gameSaleDetail = await GetOrderDetailByIdAsync(orderDetailId);
             if (gameSaleDetail != null && !gameSaleDetail.IsRefunded)

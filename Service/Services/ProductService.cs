@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Entity.Dtos.ProductDtos;
+using Entity.Dtos;
 using Entity.Entities;
 using Entity.Interfaces;
 using Entity.UnitOfWorks;
@@ -37,7 +37,7 @@ namespace Service.Services
             return true;
         }
 
-        public async Task<bool> DeleteProductAsync(Guid productId)
+        public async Task<bool> DeleteProductAsync(int productId)
         {
             var repository = _unitOfWork.GetRepository<Product>();
 
@@ -65,7 +65,7 @@ namespace Service.Services
             return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public async Task<ProductDto> GetProductByIdAsync(Guid productId)
+        public async Task<ProductDto> GetProductByIdAsync(int productId)
         {
             var repository = _unitOfWork.GetRepository<Product>();
             var product = await repository.GetAllAsync(
@@ -91,7 +91,7 @@ namespace Service.Services
 
         
 
-        public async Task<List<ProductDto>> GetProductsByBrandAsync(Guid brandId, bool includeDeleted = false)
+        public async Task<List<ProductDto>> GetProductsByBrandAsync(int brandId, bool includeDeleted = false)
         {
             var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
                 filter: g => (includeDeleted || !g.IsDeleted) && g.BrandId == brandId
@@ -101,7 +101,7 @@ namespace Service.Services
             return _mapper.Map<List<ProductDto>>(products);
         }
 
-        public async Task<List<ProductDto>> GetProductsByCategoryAsync(Guid categoryId, bool includeDeleted = false)
+        public async Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId, bool includeDeleted = false)
         {
             var products = await _unitOfWork.GetRepository<Product>().GetAllAsync(
                 filter: g => (includeDeleted || !g.IsDeleted) && g.CategoryId == categoryId 
@@ -128,7 +128,7 @@ namespace Service.Services
             return _mapper.Map<List<ProductDto>>(games);
         }
 
-        public async Task<bool> SoftDeleteProductAsync(Guid productId)
+        public async Task<bool> SoftDeleteProductAsync(int productId)
         {
             var repository = _unitOfWork.GetRepository<Product>();
             var product = await repository.GetByIdAsync(productId);
@@ -146,7 +146,7 @@ namespace Service.Services
             return true;
         }
 
-        public async Task<bool> UpdateProductAsync(Guid id, ProductDto model)
+        public async Task<bool> UpdateProductAsync(int id, ProductDto model)
         {
             // Fetch the product using the id from the URL
             var product = await _unitOfWork.GetRepository<Product>().GetByIdAsync(id);

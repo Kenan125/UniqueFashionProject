@@ -11,9 +11,9 @@ namespace Entity.Interfaces
     public interface IOrderService
     {
         Task CreateOrderAsync(Order order);
-        Task<OrderDto> GetOrderByIdAsync(Guid orderId);
-        Task<List<OrderDto>> GetUserPurchasesAsync(Guid userId);
-        Task RefundOrderAsync(Guid orderId, Guid? orderDetailId = null);
+        Task<OrderDto> GetOrderByIdAsync(int orderId);
+        Task<List<OrderDto>> GetUserPurchasesAsync(int userId);
+        Task RefundOrderAsync(int orderId, int? orderDetailId = null);
         Task<int> GetTotalOrdersCountAsync();
         Task<decimal> GetTotalRevenueAsync();
        

@@ -8,7 +8,7 @@ namespace Entity.Dtos
 {
     public class ShippingAddressDto : BaseDto
     {
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public UserDto User { get; set; }
         public string AddressLine { get; set; }
         public string District { get; set; }

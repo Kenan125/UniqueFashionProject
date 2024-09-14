@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
 
         // GET: api/orders/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrderById(Guid id)
+        public async Task<IActionResult> GetOrderById(int id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
 
         // GET: api/orders/user/{userId}
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserPurchases(Guid userId)
+        public async Task<IActionResult> GetUserPurchases(int userId)
         {
             var orders = await _orderService.GetUserPurchasesAsync(userId);
             return Ok(orders);
@@ -73,7 +73,7 @@ namespace WebAPI.Controllers
 
         // POST: api/orders/{id}/refund
         [HttpPost("{id}/refund")]
-        public async Task<IActionResult> RefundOrder(Guid id, [FromQuery] Guid? orderDetailId = null)
+        public async Task<IActionResult> RefundOrder(int id, [FromQuery] int? orderDetailId = null)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)

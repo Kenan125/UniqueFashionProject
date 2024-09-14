@@ -10,8 +10,8 @@ namespace Entity.Interfaces
     public interface IShippingAddressService
     {
         Task CreateShippingAddressAsync(ShippingAddressDto model);
-        Task<ShippingAddressDto> GetShippingAddressByIdAsync(Guid addressId);
+        Task<ShippingAddressDto> GetShippingAddressByIdAsync(int addressId);
         Task UpdateShippingAddressAsync(ShippingAddressDto model);
-        Task DeleteShippingAddressAsync(Guid addressId);
+        Task DeleteShippingAddressAsync(int addressId);
     }
 }

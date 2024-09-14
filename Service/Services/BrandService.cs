@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Entity.Dtos.BrandDtos;
-using Entity.Dtos.ProductDtos;
+using Entity.Dtos;
 using Entity.Entities;
 using Entity.Interfaces;
 using Entity.UnitOfWorks;
@@ -35,7 +34,7 @@ namespace Service.Services
             return true;
         }
 
-        public async Task<bool> DeleteBrandAsync(Guid brandId)
+        public async Task<bool> DeleteBrandAsync(int brandId)
         {
             var repository = _unitOfWork.GetRepository<Brand>();
 
@@ -61,7 +60,7 @@ namespace Service.Services
             return _mapper.Map<List<BrandDto>>(products);
         }
 
-        public async Task<BrandDto> GetBrandByIdAsync(Guid brandId)
+        public async Task<BrandDto> GetBrandByIdAsync(int brandId)
         {
             var repository = _unitOfWork.GetRepository<Brand>();
             var product = await repository.GetAllAsync(
@@ -84,7 +83,7 @@ namespace Service.Services
             return productDto;
         }
 
-        public async Task<bool> UpdateBrandAsync(Guid id, BrandDto model)
+        public async Task<bool> UpdateBrandAsync(int id, BrandDto model)
         {
             // Fetch the product using the id from the URL
             var brand = await _unitOfWork.GetRepository<Brand>().GetByIdAsync(id);
