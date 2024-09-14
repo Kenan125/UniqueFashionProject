@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
     return (
@@ -17,12 +17,10 @@ function Header() {
                         <div className="col-lg-6 col-md-5">
                             <div className="header__top__right">
                                 <div className="header__top__links">
-                                    <Link to="/signin">Sign in</Link>
-                                    <Link to="/register">Register</Link>
+                                    <NavLink to="/signin">Sign in</NavLink>
+                                    <NavLink to="/register">Register</NavLink>
                                 </div>
                                 <div className="header__top__hover">
-
-
                                 </div>
                             </div>
                         </div>
@@ -36,9 +34,9 @@ function Header() {
                     {/* Logo */}
                     <div className="col-lg-3 col-md-3">
                         <div className="header__logo">
-                            <Link to="/">
+                            <NavLink to="/">
                                 <img src="/img/logo.png" alt="Logo" />
-                            </Link>
+                            </NavLink>
                         </div>
                     </div>
 
@@ -46,37 +44,63 @@ function Header() {
                     <div className="col-lg-6 col-md-6">
                         <nav className="header__menu mobile-menu">
                             <ul>
-                                <li className="active">
-                                    <Link to="/">Home</Link>
+                                <li>
+                                    <NavLink
+                                        to="/"
+                                        className={({ isActive }) => (isActive ? 'active' : '')}
+                                        end
+                                    >
+                                        Home
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/shop">Shop</Link> {/* Ensure it's lowercase /shop */}
+                                    <NavLink
+                                        to="/shop"
+                                        className={({ isActive }) => (isActive ? 'active' : '')}
+                                    >
+                                        Shop
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="#">Pages</Link>
+                                    <NavLink
+                                        to="/pages"
+                                        className={({ isActive }) => (isActive ? 'active' : '')}
+                                    >
+                                        Pages
+                                    </NavLink>
                                     <ul className="dropdown">
                                         <li>
-                                            <Link to="/about">About Us</Link>
+                                            <NavLink to="/about">About Us</NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/shop-details">Shop Details</Link>
+                                            <NavLink to="/shop-details">Shop Details</NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/shopping-cart">Shopping Cart</Link>
+                                            <NavLink to="/shopping-cart">Shopping Cart</NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/checkout">Check Out</Link>
+                                            <NavLink to="/checkout">Check Out</NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/blog-details">Blog Details</Link>
+                                            <NavLink to="/blog-details">Blog Details</NavLink>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <Link to="/blog">Blog</Link>
+                                    <NavLink
+                                        to="/blog"
+                                        className={({ isActive }) => (isActive ? 'active' : '')}
+                                    >
+                                        Blog
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/contact">Contacts</Link>
+                                    <NavLink
+                                        to="/contact"
+                                        className={({ isActive }) => (isActive ? 'active' : '')}
+                                    >
+                                        Contacts
+                                    </NavLink>
                                 </li>
                             </ul>
                         </nav>
@@ -88,12 +112,12 @@ function Header() {
                             <button className="search-switch">
                                 <i className="fas fa-search"></i>
                             </button>
-                            <Link to="/wishlist">
+                            <NavLink to="/wishlist">
                                 <i className="fas fa-heart"></i>
-                            </Link>
-                            <Link to="/cart">
-                                <img src="/img/icon/cart.png" alt="Cart"  /> <span>0</span>
-                            </Link>
+                            </NavLink>
+                            <NavLink to="/cart">
+                                <img src="/img/icon/cart.png" alt="Cart" /> <span>0</span>
+                            </NavLink>
                             <div className="price">$0.00</div>
                         </div>
                     </div>
