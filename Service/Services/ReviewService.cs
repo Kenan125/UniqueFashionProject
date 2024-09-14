@@ -33,7 +33,7 @@ namespace Service.Services
                 return 0; // No reviews available
             }
 
-            return reviews.Average(r => r.Rating);
+            return reviews.Average(r  => r.Rating ?? default(double));
         }
 
 

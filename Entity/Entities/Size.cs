@@ -8,7 +8,7 @@ namespace Entity.Entities
 {
     public class Size : BaseEntity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
     }
 }

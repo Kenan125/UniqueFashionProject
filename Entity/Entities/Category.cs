@@ -9,7 +9,7 @@ namespace Entity.Entities
 {
     public class Category : BaseEntity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         
 
         public int? ParentCategoryId { get; set; }

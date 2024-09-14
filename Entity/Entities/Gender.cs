@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Enums
+namespace Entity.Entities
 {
-    public enum AgeGroup
+    public class Gender : BaseEntity
     {
-        Adult,
-        Kid,
-        Infant
+        public string? GenderName { get; set; }
     }
 }

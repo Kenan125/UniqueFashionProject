@@ -19,7 +19,7 @@ const Home =()=> {
     }, []);
     return (
         <div>
-            <Preloader/>
+
             <Header/>
             <Banner/>
             <ProductSection/>

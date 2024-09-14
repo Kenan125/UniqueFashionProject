@@ -17,13 +17,15 @@ namespace Service.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IFakeStoreService _fakeStoreService;
 
 
-        public ProductService(IMapper mapper, IUnitOfWork unitOfWork)
+        public ProductService(IMapper mapper, IUnitOfWork unitOfWork, IFakeStoreService fakeStoreService)
         {
 
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _fakeStoreService = fakeStoreService;
         }
 
         public async Task<bool> AddProductAsync(ProductDto model)
@@ -163,6 +165,83 @@ namespace Service.Services
 
             return true;
         }
+        public async Task<bool> ImportProductsFromFakeStoreAsync()
+        {
+            var fakeProducts = await _fakeStoreService.GetProductsAsync();
 
+            foreach (var fakeProductDto in fakeProducts)
+            {
+                // Map to Product entity
+                var product = _mapper.Map<Product>(fakeProductDto);
+
+                // Resolve CategoryId
+                product.CategoryId = await ResolveCategoryIdAsync(fakeProductDto.Category);
+
+                // Set default BrandId and SizeId or resolve based on your logic
+                product.BrandId = await ResolveBrandIdAsync("Default Brand");
+                product.SizeId = await ResolveSizeIdAsync("Default Size");
+
+                // Add product to repository
+                await _unitOfWork.GetRepository<Product>().AddAsync(product);
+            }
+
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        private async Task<int> ResolveCategoryIdAsync(string categoryName)
+        {
+            var categoryRepo = _unitOfWork.GetRepository<Category>();
+            var category = await categoryRepo.GetAsync(c => c.Name == categoryName);
+
+            if (category == null)
+            {
+                category = new Category
+                {
+                    Name = categoryName,
+                    ParentCategoryId = null // Adjust if needed
+                };
+                await categoryRepo.AddAsync(category);
+                await _unitOfWork.CommitAsync();
+            }
+
+            return category.Id;
+        }
+
+        private async Task<int> ResolveBrandIdAsync(string brandName)
+        {
+            var brandRepo = _unitOfWork.GetRepository<Brand>();
+            var brand = await brandRepo.GetAsync(b => b.Name == brandName);
+
+            if (brand == null)
+            {
+                brand = new Brand
+                {
+                    Name = brandName
+                };
+                await brandRepo.AddAsync(brand);
+                await _unitOfWork.CommitAsync();
+            }
+
+            return brand.Id;
+        }
+
+        private async Task<int> ResolveSizeIdAsync(string sizeName)
+        {
+            var sizeRepo = _unitOfWork.GetRepository<Size>();
+            var size = await sizeRepo.GetAsync(s => s.Name == sizeName);
+
+            if (size == null)
+            {
+                size = new Size
+                {
+                    Name = sizeName
+                };
+                await sizeRepo.AddAsync(size);
+                await _unitOfWork.CommitAsync();
+            }
+
+            return size.Id;
+        }
     }
 }

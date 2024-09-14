@@ -52,6 +52,7 @@ namespace Service.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ISellerService,SellerService>();
             services.AddAutoMapper(typeof(MappingProfile));
+            services.AddHttpClient<IFakeStoreService, FakeStoreService>();
             services.AddScoped<RoleInitializer>();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Entity.Entities;
-using Entity.Enums;
 using Entity.Identities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -20,6 +19,8 @@ namespace DataAccess.Contexts
         public DbSet<ShippingAddress> ShippingAddresses { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<AgeGroup> AgeGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,19 @@ namespace DataAccess.Contexts
                       .HasMaxLength(200)
                       .HasDefaultValue("/images/DefaultPfp.jpg");
             });
+            // Configure Gender relationship
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Gender)
+                .WithMany()
+                .HasForeignKey(p => p.GenderId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete or update
+
+            // Configure AgeGroup relationship
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.AgeGroup)
+                .WithMany()
+                .HasForeignKey(p => p.AgeGroupId)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Product>()
             .Property(g => g.Price)
             .HasColumnType("decimal(18, 2)");
@@ -366,7 +380,7 @@ namespace DataAccess.Contexts
                     LastName = "Doe",
                     UserName = "johndoe",
                     Email = "john.doe@example.com",
-                    Gender = Gender.Male,
+                    GenderId = 1,
                     ProfilePictureUrl = null,
                     NormalizedUserName = "JOHNDOE",
                     NormalizedEmail = "JOHN.DOE@EXAMPLE.COM",
@@ -381,7 +395,7 @@ namespace DataAccess.Contexts
                     LastName = "Doe",
                     UserName = "janedoe",
                     Email = "jane.doe@example.com",
-                    Gender = Gender.Female,
+                    GenderId = 2,
                     ProfilePictureUrl = null,
                     NormalizedUserName = "JANEDOE",
                     NormalizedEmail = "JANE.DOE@EXAMPLE.COM",
@@ -402,8 +416,8 @@ namespace DataAccess.Contexts
                     DiscountPrice = 65.00m,
                     StockQuantity = 50,
                     Condition = "New",
-                    Gender = Gender.Male,
-                    AgeGroup = AgeGroup.Adult,
+                    GenderId = 1,
+                    AgeGroupId = 1,
                     CategoryId = 1,  // Link to "Clothing" category
                     BrandId = 1,  // Link to "Nike" brand
                     SizeId = 1,  // Link to "Small" size
@@ -422,8 +436,8 @@ namespace DataAccess.Contexts
                     DiscountPrice = 100.00m,
                     StockQuantity = 30,
                     Condition = "New",
-                    Gender = Gender.Female,
-                    AgeGroup = AgeGroup.Adult,
+                    GenderId = 2,
+                    AgeGroupId = 1,
                     CategoryId = 4,  // Link to "Women's Clothing" category
                     BrandId = 2,  // Link to "Adidas" brand
                     SizeId = 2,  // Link to "Medium" size
@@ -459,6 +473,67 @@ namespace DataAccess.Contexts
                     IsDeleted = false
                 }
             );
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender
+                {
+                    Id = 1,
+                    GenderName ="Male",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+
+
+                },
+                new Gender
+                {
+                    Id = 2,
+                    GenderName = "Female",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+
+
+                },
+                new Gender
+                {
+                    Id = 3,
+                    GenderName = "Unisex",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+
+
+                },
+                new Gender
+                {
+                    Id = 4,
+                    GenderName = "Other",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+
+
+                }
+                );
+            modelBuilder.Entity<AgeGroup>().HasData(
+                new AgeGroup
+                {
+                    Id=1,
+                    Name="Adult",
+                    CreatedDate= DateTime.UtcNow,
+                    IsDeleted = false,
+                },
+                new AgeGroup
+                {
+                    Id = 2,
+                    Name = "Kid",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+                },
+                new AgeGroup
+                {
+                    Id = 3,
+                    Name = "Infant",
+                    CreatedDate = DateTime.UtcNow,
+                    IsDeleted = false,
+                }
+                );
 
             base.OnModelCreating(modelBuilder);
         }

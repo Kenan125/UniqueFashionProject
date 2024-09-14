@@ -9,7 +9,7 @@ namespace Entity.Entities
 {
     public class Seller : BaseEntity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int? UserId { get; set; }
 
         public AppUser User { get; set; }

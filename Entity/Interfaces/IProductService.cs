@@ -21,6 +21,7 @@ namespace Entity.Interfaces
 
         Task<List<ProductDto>> GetProductsByCategoryAsync(int categoryId, bool includeDeleted = false);
         Task<List<ProductDto>> GetProductsByBrandAsync(int brandId, bool includeDeleted = false);
+        Task<bool> ImportProductsFromFakeStoreAsync();
 
     }
 }
