@@ -5,7 +5,7 @@ const ProductItem = ({ product }) => {
         <div style={styles.card}>
             <img src={product.primaryImageUrl} alt={product.name} style={styles.image} />
             <h2>{product.name}</h2>
-            <p>{product.description}</p>
+            
             <p><strong>Price:</strong> ${product.price}</p>
             {product.discountPrice && <p><strong>Discount Price:</strong> ${product.discountPrice}</p>}
         </div>
