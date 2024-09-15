@@ -9,6 +9,7 @@ import Home from "./components/pages/Home.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import Shop from "./components/pages/Shop.jsx";
 import ProductsPage from "./components/pages/ProductsPage.jsx";
+
 // ... other imports
 
 function App() {
