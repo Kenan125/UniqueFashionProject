@@ -28,11 +28,35 @@ const ShopProductList = () => {
     }
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {products.map((product) => (
-                <ProductItem key={product.name} product={product} />
-            ))}
-        </div>
+        <>
+            <div className="shop__product__option">
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-6">
+                        <div className="shop__product__option__left">
+                            <p>Showing 1–{products.length} of {products.length} results</p>
+                        </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-6">
+                        <div className="shop__product__option__right">
+                            <p>Sort by Price:</p>
+                            <select>
+                                <option value="">Low To High</option>
+                                <option value="">$0 - $55</option>
+                                <option value="">$55 - $100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row">
+                {products.map((product) => (
+                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.name}>
+                        <ProductItem product={product} />
+                    </div>
+                ))}
+            </div>
+        </>
     );
 };
 
