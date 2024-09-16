@@ -1,4 +1,6 @@
 import React from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHeart} from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
     return (
@@ -90,9 +92,13 @@ const Footer = () => {
                         <div className="footer__copyright__text">
                             <p>
                                 &copy; {new Date().getFullYear()} All rights reserved | This template is made with{' '}
-                                <i className="fa fa-heart-o" aria-hidden="true"></i> by{' '}
+                                <FontAwesomeIcon
+                                    icon={faHeart} /* Use the imported icon here */
+                                    beat /* Add the beat animation */
+                                    style={{ color: "#dd3e2c" }} /* Custom color */
+                                /> {' '} by{'  '}
                                 <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">
-                                    Colorlib
+                                     Colorlib
                                 </a>
                             </p>
                         </div>

@@ -97,7 +97,7 @@ a:hover,
 a:focus {
     text-decoration: none;
     outline: none;
-    color: #ffffff;
+
 }
 a{
     text-decoration: none;
@@ -1485,6 +1485,13 @@ ol {
 .product__details__pic .nav-tabs .nav-item .nav-link {
     padding: 0;
     display: block;
+}
+.nav-link-custom i {
+    color: #000; /* Set desired color for the icon */
+}
+
+.nav-link-custom:hover i {
+    color: #000; /* Ensure the icon color remains on hover */
 }
 
 .product__details__pic .nav-tabs .nav-item .nav-link .product__thumb__pic {

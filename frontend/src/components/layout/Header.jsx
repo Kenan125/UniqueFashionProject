@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import SearchBar from "./SearchBar.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
     return (
@@ -117,11 +119,14 @@ function Header() {
                         <div className="header__nav__option d-flex align-items-center justify-content-end">
 
                             <SearchBar/>
-                            <NavLink to="/cart" className="d-flex align-items-center ml-3">
-
-                                <img src="/img/icon/cart.png" alt="Cart" className="img-fluid"/>
+                            <NavLink to="/cart" className="nav-link-custom d-flex align-items-center ml-3">
+                                <FontAwesomeIcon
+                                    icon={faBagShopping} /* Correct way to pass the icon */
+                                    style={{ color: "#23385c" }} /* Custom color styling */
+                                />
                                 <span>0</span>
                             </NavLink>
+
 
                             <div className="price ml-2">$0.00</div>
                         </div>
