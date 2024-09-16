@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import SearchBar from "../SearchBar.jsx";
 
 const ShopSidebar = ({ onCategorySelect }) => {
     const [categories, setCategories] = useState([]);
@@ -29,14 +30,7 @@ const ShopSidebar = ({ onCategorySelect }) => {
 
     return (
         <div className="shop__sidebar">
-            <div className="shop__sidebar__search">
-                <form action="#">
-                    <input type="text" placeholder="Search..." />
-                    <button type="submit">
-                        <span className="icon_search"></span>
-                    </button>
-                </form>
-            </div>
+            <SearchBar/>
 
             {/* Categories Filter */}
             <div className="shop__sidebar__categories">

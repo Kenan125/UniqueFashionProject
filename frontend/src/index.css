@@ -319,6 +319,7 @@ ol {
 
 .header {
     background: #ffffff;
+
 }
 
 .header__top {
@@ -509,14 +510,26 @@ ol {
 }
 
 .header__nav__option {
-    text-align: right;
-    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 10px; /* Add some spacing between the elements */
+    padding: 0;
 }
-
+.header__nav__option .shop__sidebar__search {
+    display: flex; /* Flex layout for the search input and button */
+    align-items: center; /* Center the search input vertically */
+    margin-right: 20px; /* Adjust margin for spacing between search and cart */
+}
+.header__nav__option .shop__sidebar__search input {
+    height: 40px; /* Ensure search input has a consistent height */
+    border: 1px solid #ccc; /* Add a border for styling */
+    margin-right: 10px; /* Space between search input and cart */
+}
 .header__nav__option a {
-    display: inline-block;
-    margin-right: 26px;
-    position: relative;
+    display: flex;
+    align-items: center; /* Vertically center the cart icon and price */
 }
 
 .header__nav__option a span {
@@ -535,10 +548,7 @@ ol {
     font-size: 15px;
     color: #111111;
     font-weight: 700;
-    display: inline-block;
-    margin-left: -20px;
-    position: relative;
-    top: 3px;
+    margin-left: 5px; /* Small spacing between the cart icon and price */
 }
 
 .offcanvas-menu-wrapper {
