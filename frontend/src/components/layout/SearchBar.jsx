@@ -31,7 +31,7 @@ const SearchBar = () => {
                     onChange={handleSearchChange}
                 />
                 <button type="submit">
-                    <span className="icon_search"></span>
+                    <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
         </div>

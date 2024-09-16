@@ -23,12 +23,15 @@
     border: none;
     width: 100%;
     outline: none;
-    color: rgb(100, 100, 100);
+    color: black; /* Set the regular text color to black */
     padding: 0;
     height: 100%; /* Ensure input takes the full height of its container */
     box-sizing: border-box; /* Consistent sizing */
 }
-
+/* Placeholder style */
+.input::placeholder {
+    color: rgb(150, 150, 150); /* Lighter color for placeholder */
+}
 .active.search-bar-container {
     width: 50px;
 }
