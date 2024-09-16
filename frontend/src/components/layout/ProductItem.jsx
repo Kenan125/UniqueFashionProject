@@ -1,14 +1,17 @@
 
+import PropTypes from 'prop-types';
+import {productPropTypes} from "../../../public/props/productPropTypes.js"; // For prop validation
+
+
 const ProductItem = ({ product }) => {
     return (
         <div className="product__item">
-            {/* Adjust the background size and positioning */}
             <div className="product__item__pic" style={{
                 backgroundImage: `url(${product.primaryImageUrl})`,
                 backgroundSize: 'contain',  // Ensure the image fits inside the card
                 backgroundPosition: 'center',  // Center the image
                 backgroundRepeat: 'no-repeat',  // Prevent image tiling
-                height: '300px',  // Set a fixed height for the product image container (you can adjust this)
+                height: '300px',  // Set a fixed height for the product image container
             }}>
                 <ul className="product__hover">
                     <li><a href="#"><img src="img/icon/heart.png" alt="Favorite" /></a></li>
@@ -32,6 +35,11 @@ const ProductItem = ({ product }) => {
             </div>
         </div>
     );
+};
+
+// Using PropTypes to validate the product prop
+ProductItem.propTypes = {
+    product: PropTypes.shape(productPropTypes).isRequired,
 };
 
 export default ProductItem;

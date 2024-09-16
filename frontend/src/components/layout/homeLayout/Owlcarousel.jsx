@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Owlcarousel() {
@@ -9,7 +9,7 @@ function Owlcarousel() {
                 items: 1,
                 loop: true,
                 autoplay: true,
-                autoplayTimeout: 5000,
+                autoplayTimeout: 3000,
                 autoplayHoverPause: true,
             });
         }
@@ -28,10 +28,10 @@ function Owlcarousel() {
                                     <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.</p>
                                     <Link to="/shop" className="primary-btn">Shop now <span className="arrow_right"></span></Link>
                                     <div className="hero__social">
-                                        <a href="https://www.facebook.com"><i className="fa fa-facebook"></i></a>
-                                        <a href="https://www.twitter.com"><i className="fa fa-twitter"></i></a>
-                                        <a href="https://www.pinterest.com"><i className="fa fa-pinterest"></i></a>
-                                        <a href="https://www.instagram.com"><i className="fa fa-instagram"></i></a>
+                                        <a href="https://www.facebook.com"><i className="fa-brands fa-facebook"></i></a>
+                                        <a href="https://www.twitter.com"><i className="fa-brands fa-x-twitter"></i></a>
+                                        <a href="https://www.pinterest.com"><i className="fa-brands fa-pinterest"></i></a>
+                                        <a href="https://www.instagram.com"><i className="fa-brands fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -48,10 +48,10 @@ function Owlcarousel() {
                                     <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering commitment to exceptional quality.</p>
                                     <Link to="/shop" className="primary-btn">Shop now <span className="arrow_right"></span></Link>
                                     <div className="hero__social">
-                                        <a href="https://www.facebook.com"><i className="fa fa-facebook"></i></a>
-                                        <a href="https://www.twitter.com"><i className="fa fa-twitter"></i></a>
-                                        <a href="https://www.pinterest.com"><i className="fa fa-pinterest"></i></a>
-                                        <a href="https://www.instagram.com"><i className="fa fa-instagram"></i></a>
+                                        <a href="https://www.facebook.com"><i className="fa-brands fa-facebook"></i></a>
+                                        <a href="https://www.twitter.com"><i className="fa-brands fa-x-twitter"></i></a>
+                                        <a href="https://www.pinterest.com"><i className="fa-brands fa-pinterest"></i></a>
+                                        <a href="https://www.instagram.com"><i className="fa-brands fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>

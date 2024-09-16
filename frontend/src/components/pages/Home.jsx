@@ -1,12 +1,10 @@
-import Header from "../layout/Header.jsx";
-import Banner from "../layout/Banner.jsx";
-import ProductSection from "../layout/ProductSection.jsx";
-import Categories from "../layout/Categories.jsx";
-import Instagram from "../layout/Instagram.jsx";
-import LatestNews from "../layout/LatestNews.jsx";
-import Footer from "../layout/Footer.jsx";
+import Banner from "../layout/homeLayout/Banner.jsx";
+import ProductSection from "../layout/homeLayout/ProductSection.jsx";
+import Categories from "../layout/homeLayout/Categories.jsx";
+import Instagram from "../layout/homeLayout/Instagram.jsx";
+import LatestNews from "../layout/homeLayout/LatestNews.jsx";
 import {useEffect} from "react";
-import Owlcarousel from "../layout/Owlcarousel.jsx";
+import Owlcarousel from "../layout/homeLayout/Owlcarousel.jsx";
 
 
 const Home =()=> {
@@ -27,7 +25,7 @@ const Home =()=> {
             <Categories/>
             <Instagram/>
             <LatestNews/>
-            <Footer/>
+
         </div>
     );
 }

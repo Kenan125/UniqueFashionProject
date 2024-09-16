@@ -99,7 +99,9 @@ a:focus {
     outline: none;
     color: #ffffff;
 }
-
+a{
+    text-decoration: none;
+}
 ul,
 ol {
     padding: 0;

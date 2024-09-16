@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from './Header';
 import Breadcrumb from "./Breadcrumb.jsx";
+import Footer from "./Footer.jsx";
 
 const Layout = () => {
     return (
@@ -9,7 +10,8 @@ const Layout = () => {
             <Header />
             <Breadcrumb/>
 
-            <Outlet /> {/* Renders the child route content, like Home or ProductsPage */}
+            <Outlet />
+            <Footer/>
         </>
     );
 }

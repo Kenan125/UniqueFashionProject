@@ -112,9 +112,6 @@ function Header() {
                             <button className="search-switch">
                                 <i className="fas fa-search"></i>
                             </button>
-                            <NavLink to="/wishlist">
-                                <i className="fas fa-heart"></i>
-                            </NavLink>
                             <NavLink to="/cart">
                                 <img src="/img/icon/cart.png" alt="Cart" /> <span>0</span>
                             </NavLink>

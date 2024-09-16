@@ -1,5 +1,5 @@
-import ShopSidebar from "../layout/ShopSidebar.jsx";
-import ShopProductList from "../layout/ShopProductList.jsx";
+import ShopSidebar from "../layout/shopLayout/ShopSidebar.jsx";
+import ShopProductList from "../layout/shopLayout/ShopProductList.jsx";
 
 
 function Shop() {
