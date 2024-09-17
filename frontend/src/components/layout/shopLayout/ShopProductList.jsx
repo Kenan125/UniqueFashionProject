@@ -3,7 +3,7 @@ import axios from 'axios';
 import ProductItem from '../ProductItem.jsx';
 import { useLocation } from 'react-router-dom';
 
-const ShopProductList = () => {
+const ShopProductList = ({ selectedCategory }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -13,21 +13,30 @@ const ShopProductList = () => {
     const searchTerm = searchParams.get('search');
 
     useEffect(() => {
-        const url = searchTerm
-            ? `https://localhost:7051/api/Products/search?term=${searchTerm}`
-            : 'https://localhost:7051/api/Products';
+        setLoading(true); // Set loading before API call
+        let url = 'https://localhost:7051/api/Products';
+
+        if (searchTerm) {
+            url = `https://localhost:7051/api/Products/search?term=${searchTerm}`;
+        } else if (selectedCategory) {
+            url = `https://localhost:7051/api/Products/category/${selectedCategory}`;
+        }
 
         axios.get(url)
             .then((response) => {
-                // Assuming the API returns an array directly
                 setProducts(response.data);
                 setLoading(false);
             })
             .catch((error) => {
-                setError('An error occurred while fetching products.');
+                if (error.response && error.response.status === 404) {
+                    // If the status is 404, treat it as no products found
+                    setProducts([]);
+                } else {
+                    setError('An error occurred while fetching products.');
+                }
                 setLoading(false);
             });
-    }, [searchTerm]);
+    }, [searchTerm, selectedCategory]);
 
     if (loading) {
         return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading products...</div>;
@@ -35,6 +44,15 @@ const ShopProductList = () => {
 
     if (error) {
         return <div style={{ color: 'red', textAlign: 'center', marginTop: '50px' }}>{error}</div>;
+    }
+
+    if (products.length === 0) {
+        return (
+            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                No products available in this category. Please try another one.
+                <button onClick={() => window.history.back()} style={{ marginTop: '20px' }}>Go Back</button>
+            </div>
+        );
     }
 
     return (
@@ -61,8 +79,8 @@ const ShopProductList = () => {
 
             <div className="row">
                 {products.map((product) => (
-                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
-                        <ProductItem product={product}/>
+                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.name}>
+                        <ProductItem product={product} />
                     </div>
                 ))}
             </div>

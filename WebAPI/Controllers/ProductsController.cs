@@ -78,13 +78,23 @@ namespace WebAPI.Controllers
         [HttpGet("category/{categoryId}")]
         public async Task<IActionResult> GetProductByCategoryId(int categoryId, [FromQuery] bool includeDeleted = false)
         {
-            var product = await _productService.GetProductsByCategoryAsync(categoryId, includeDeleted);
-            if (product == null || !product.Any())
+            try
             {
-                return NotFound();
+                var products = await _productService.GetProductsByCategoryAsync(categoryId, includeDeleted);
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No products found in this category.");
+                }
+                return Ok(products);
             }
-            return Ok(product);
+            catch (Exception ex)
+            {
+                // Log exception details (you can also log this into a file or database)
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
+
         [HttpGet("brand/{brandId}")]
         public async Task<IActionResult> GetProductByBrandId(int brandId, [FromQuery] bool includeDeleted = false)
         {

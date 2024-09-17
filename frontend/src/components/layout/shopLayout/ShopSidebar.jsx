@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchBar from "../SearchBar.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+// Ensure the CSS file is added for custom styling
 
 const ShopSidebar = ({ onCategorySelect }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [activeCategory, setActiveCategory] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         axios.get('https://localhost:7051/api/Categories')
             .then(response => {
-                // Assuming the API returns an array directly
                 setCategories(response.data);
                 setLoading(false);
             })
@@ -20,6 +24,25 @@ const ShopSidebar = ({ onCategorySelect }) => {
                 setLoading(false);
             });
     }, []);
+
+    const handleCategorySelect = (categoryId) => {
+        setActiveCategory(categoryId);
+        onCategorySelect(categoryId); // Pass the selected category ID to parent
+    };
+
+    const resetCategoryFilter = () => {
+        setActiveCategory(null);
+        onCategorySelect(null); // Reset the filter in the parent
+    };
+
+    const handleSearchInput = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const resetSearch = () => {
+        setSearchTerm('');
+        // Optionally, you could also add search reset logic here
+    };
 
     if (loading) {
         return <div>Loading categories...</div>;
@@ -31,22 +54,45 @@ const ShopSidebar = ({ onCategorySelect }) => {
 
     return (
         <div className="shop__sidebar">
-            <SearchBar/>
+            {/* Search Bar with Reset Button */}
+            <div className="search-bar-wrapper">
+                <SearchBar value={searchTerm} onChange={handleSearchInput} />
+                {searchTerm && (
+                    <button className="reset-search-btn" onClick={resetSearch}>
+                        <FontAwesomeIcon icon={faCircleXmark} size="lg" />
+                    </button>
+                )}
+            </div>
 
-            <div className="shop__sidebar__categories">
-                <h5>Categories</h5>
-                <ul className="nice-scroll">
-                    {categories.map((category) => (
-                        <li key={category.id}>
-                            <a href="#" onClick={(e) => {
-                                e.preventDefault();
-                                onCategorySelect(category.id);
-                            }}>
-                                {category.name}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+            {/* Collapse Button */}
+            <p className="categories-header">
+                <a className="btn" data-bs-toggle="collapse" href="#collapseCategories" role="button" aria-expanded="false" aria-controls="collapseCategories">
+                    CATEGORIES
+                    <span className="arrow">&#9662;</span>
+                </a>
+            </p>
+
+            {/* Collapsible Categories Section */}
+            <div className="collapse" id="collapseCategories">
+                <div className="card-body">
+                    <div className="shop__sidebar__categories">
+                        <ul className="nice-scroll">
+                            {categories.map((category) => (
+                                <li key={category.id} className={`category-item ${activeCategory === category.id ? 'active' : ''}`}>
+                                    <a href="#" onClick={(e) => {
+                                        e.preventDefault();
+                                        handleCategorySelect(category.id);
+                                    }}>
+                                        {category.name}
+                                    </a>
+                                    {activeCategory === category.id && (
+                                        <button className="reset-btn" onClick={resetCategoryFilter}><FontAwesomeIcon icon={faCircleXmark} size="lg" /></button>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     );

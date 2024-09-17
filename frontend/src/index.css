@@ -521,6 +521,112 @@ ol {
     font-size: 18px;
     margin-bottom: 15px;
 }
+/* Styling for the categories header */
+.categories-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+}
+.categories-header a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.categories-header span {
+    text-transform: uppercase;
+}
+.categories-header .arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+.arrow {
+    transition: transform 0.3s ease;
+}
+
+.arrow.down {
+    transform: rotate(90deg); /* Rotated for "down" arrow */
+}
+
+.arrow.up {
+    transform: rotate(0); /* Default for "up" arrow */
+}
+
+/* Styling for the categories header */
+.categories-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.categories-header span {
+    text-transform: uppercase;
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.arrow.down {
+    transform: rotate(0); /* Default for "down" arrow */
+}
+
+.arrow.up {
+    transform: rotate(180deg); /* Rotated for "up" arrow */
+}
+
+/* Styling for the category list */
+.shop__sidebar__categories ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shop__sidebar__categories li {
+    padding: 5px 0;
+}
+
+.shop__sidebar__categories li a {
+    color: #8a8a8a;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.shop__sidebar__categories li a:hover {
+    color: #333;
+}
+/* Styling for the reset 'X' button */
+.reset-btn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.reset-btn:hover {
+    color: darkred;
+}
+/* Collapsible section */
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+}
+
 
 .hero__slider.owl-carousel .owl-item.active .hero__text h2 {
     top: 0;
@@ -712,7 +818,19 @@ ol {
 /*---------------------
   Categories
 -----------------------*/
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
 
+.category-item a {
+    color: #8a8a8a;
+    font-size: 14px;
+    text-decoration: none;
+    flex-grow: 1;
+}
 .categories {
     background: #f3f2ee;
     overflow: hidden;
