@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import SearchBar from "../SearchBar.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-// Ensure the CSS file is added for custom styling
+
+import SearchBar from '../SearchBar.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {getCategories} from "../../../services/api.js";
 
 const ShopSidebar = ({ onCategorySelect }) => {
     const [categories, setCategories] = useState([]);
@@ -12,8 +12,9 @@ const ShopSidebar = ({ onCategorySelect }) => {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Fetch categories from the API
     useEffect(() => {
-        axios.get('https://localhost:7051/api/Categories')
+        getCategories()
             .then(response => {
                 setCategories(response.data);
                 setLoading(false);
@@ -27,12 +28,12 @@ const ShopSidebar = ({ onCategorySelect }) => {
 
     const handleCategorySelect = (categoryId) => {
         setActiveCategory(categoryId);
-        onCategorySelect(categoryId); // Pass the selected category ID to parent
+        onCategorySelect(categoryId);
     };
 
     const resetCategoryFilter = () => {
         setActiveCategory(null);
-        onCategorySelect(null); // Reset the filter in the parent
+        onCategorySelect(null);
     };
 
     const handleSearchInput = (e) => {
@@ -41,7 +42,6 @@ const ShopSidebar = ({ onCategorySelect }) => {
 
     const resetSearch = () => {
         setSearchTerm('');
-        // Optionally, you could also add search reset logic here
     };
 
     if (loading) {

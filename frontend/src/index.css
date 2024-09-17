@@ -831,6 +831,10 @@ ol {
     text-decoration: none;
     flex-grow: 1;
 }
+.category-item.active a {
+    font-weight: bold; /* Makes the active category bold */
+    color: black;
+}
 .categories {
     background: #f3f2ee;
     overflow: hidden;
