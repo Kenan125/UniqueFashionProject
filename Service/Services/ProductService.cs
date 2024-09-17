@@ -58,8 +58,8 @@ namespace Service.Services
                 {
             g => g.Brand,
             g => g.Seller,           
-            g => g.Category,
-            g=> g.Size
+            g => g.Category
+            
             
                 }
             );
@@ -77,7 +77,7 @@ namespace Service.Services
             
                     g => g.Reviews,            
                     g=>g.Category,
-                    g=>g.Size
+                    
                 }
             );
 
@@ -179,7 +179,7 @@ namespace Service.Services
 
                 // Set default BrandId and SizeId or resolve based on your logic
                 product.BrandId = await ResolveBrandIdAsync("Default Brand");
-                product.SizeId = await ResolveSizeIdAsync("Default Size");
+                
 
                 // Add product to repository
                 await _unitOfWork.GetRepository<Product>().AddAsync(product);
@@ -226,22 +226,6 @@ namespace Service.Services
             return brand.Id;
         }
 
-        private async Task<int> ResolveSizeIdAsync(string sizeName)
-        {
-            var sizeRepo = _unitOfWork.GetRepository<Size>();
-            var size = await sizeRepo.GetAsync(s => s.Name == sizeName);
-
-            if (size == null)
-            {
-                size = new Size
-                {
-                    Name = sizeName
-                };
-                await sizeRepo.AddAsync(size);
-                await _unitOfWork.CommitAsync();
-            }
-
-            return size.Id;
-        }
+        
     }
 }

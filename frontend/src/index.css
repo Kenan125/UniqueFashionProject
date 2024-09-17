@@ -516,6 +516,11 @@ ol {
     top: 0;
     opacity: 1;
 }
+.subtitle {
+    color: red;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
 
 .hero__slider.owl-carousel .owl-item.active .hero__text h2 {
     top: 0;

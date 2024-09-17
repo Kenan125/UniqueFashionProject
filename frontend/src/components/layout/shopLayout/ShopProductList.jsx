@@ -1,24 +1,26 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductItem from '../ProductItem.jsx';
 import { useLocation } from 'react-router-dom';
+
 const ShopProductList = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const location = useLocation();
-    // Extract search term from URL
+
     const searchParams = new URLSearchParams(location.search);
     const searchTerm = searchParams.get('search');
+
     useEffect(() => {
-        // If there's a search term, filter products by search term
         const url = searchTerm
             ? `https://localhost:7051/api/Products/search?term=${searchTerm}`
             : 'https://localhost:7051/api/Products';
 
         axios.get(url)
             .then((response) => {
-                setProducts(response.data.$values);
+                // Assuming the API returns an array directly
+                setProducts(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -34,8 +36,6 @@ const ShopProductList = () => {
     if (error) {
         return <div style={{ color: 'red', textAlign: 'center', marginTop: '50px' }}>{error}</div>;
     }
-
-
 
     return (
         <>
@@ -61,7 +61,7 @@ const ShopProductList = () => {
 
             <div className="row">
                 {products.map((product) => (
-                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.name}>
+                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
                         <ProductItem product={product}/>
                     </div>
                 ))}

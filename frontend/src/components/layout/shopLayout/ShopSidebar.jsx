@@ -10,7 +10,8 @@ const ShopSidebar = ({ onCategorySelect }) => {
     useEffect(() => {
         axios.get('https://localhost:7051/api/Categories')
             .then(response => {
-                setCategories(response.data.$values); // Adjust based on API response structure
+                // Assuming the API returns an array directly
+                setCategories(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -32,16 +33,14 @@ const ShopSidebar = ({ onCategorySelect }) => {
         <div className="shop__sidebar">
             <SearchBar/>
 
-            {/* Categories Filter */}
             <div className="shop__sidebar__categories">
                 <h5>Categories</h5>
                 <ul className="nice-scroll">
                     {categories.map((category) => (
                         <li key={category.id}>
-                            {/* onClick to trigger onCategorySelect with category id */}
                             <a href="#" onClick={(e) => {
-                                e.preventDefault(); // Prevent default link behavior
-                                onCategorySelect(category.id); // Call the callback with the category id
+                                e.preventDefault();
+                                onCategorySelect(category.id);
                             }}>
                                 {category.name}
                             </a>

@@ -6,5 +6,5 @@ export const productPropTypes = {
     name: PropTypes.string.isRequired,
     primaryImageUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    discountPrice: PropTypes.number,
+    discount: PropTypes.number,
 };

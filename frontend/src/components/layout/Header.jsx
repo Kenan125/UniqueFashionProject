@@ -1,7 +1,9 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from "./SearchBar.jsx";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
     return (
@@ -23,8 +25,7 @@ function Header() {
                                     <NavLink to="/signin">Sign in</NavLink>
                                     <NavLink to="/register">Register</NavLink>
                                 </div>
-                                <div className="header__top__hover">
-                                </div>
+                                {/* Additional top hover items if needed */}
                             </div>
                         </div>
                     </div>
@@ -45,97 +46,32 @@ function Header() {
 
                     {/* Navigation Menu */}
                     <div className="col-lg-6 col-md-6">
-                        <nav className="header__menu mobile-menu">
+                        <nav className="header__menu">
                             <ul>
                                 <li>
-
-                                    <NavLink
-                                        to="/"
-                                        className={({ isActive }) => (isActive ? 'active' : '')}
-                                        end
-                                    >
+                                    <NavLink to="/" end>
                                         Home
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink
-                                        to="/shop"
-                                        className={({ isActive }) => (isActive ? 'active' : '')}
-                                    >
-                                        Shop
-                                    </NavLink>
+                                    <NavLink to="/shop">Shop</NavLink>
                                 </li>
-                                <li>
-                                    <NavLink
-                                        to="/pages"
-                                        className={({ isActive }) => (isActive ? 'active' : '')}
-                                    >
-                                        Pages
-                                    </NavLink>
-                                    <ul className="dropdown">
-                                        <li>
-                                            <NavLink to="/about">About Us</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/shop-details">Shop Details</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/shopping-cart">Shopping Cart</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/checkout">Check Out</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/blog-details">Blog Details</NavLink>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/blog"
-                                        className={({ isActive }) => (isActive ? 'active' : '')}
-                                    >
-                                        Blog
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/contact"
-                                        className={({ isActive }) => (isActive ? 'active' : '')}
-                                    >
-                                        Contacts
-                                    </NavLink>
-                                </li>
-
+                                {/* Add other navigation links as needed */}
                             </ul>
-
                         </nav>
-
                     </div>
 
                     {/* Header Options */}
                     <div className="col-lg-3 col-md-3">
-
                         <div className="header__nav__option d-flex align-items-center justify-content-end">
-
-                            <SearchBar/>
+                            <SearchBar />
                             <NavLink to="/cart" className="nav-link-custom d-flex align-items-center ml-3">
-                                <FontAwesomeIcon
-                                    icon={faBagShopping} /* Correct way to pass the icon */
-                                    style={{ color: "#23385c" }} /* Custom color styling */
-                                />
+                                <FontAwesomeIcon icon={faBagShopping} style={{ color: '#23385c' }} />
                                 <span>0</span>
                             </NavLink>
-
-
                             <div className="price ml-2">$0.00</div>
                         </div>
-
                     </div>
-
-                </div>
-                <div className="canvas__open">
-                    <i className="fas fa-bars"></i>
                 </div>
             </div>
         </header>

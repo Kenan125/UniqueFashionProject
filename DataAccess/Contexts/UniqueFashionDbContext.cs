@@ -17,10 +17,9 @@ namespace DataAccess.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ShippingAddress> ShippingAddresses { get; set; }
-        public DbSet<Size> Sizes { get; set; }
+        
         public DbSet<Seller> Sellers { get; set; }
-        public DbSet<Gender> Genders { get; set; }
-        public DbSet<AgeGroup> AgeGroups { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,25 +32,15 @@ namespace DataAccess.Contexts
                       .HasMaxLength(200)
                       .HasDefaultValue("/images/DefaultPfp.jpg");
             });
-            // Configure Gender relationship
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Gender)
-                .WithMany()
-                .HasForeignKey(p => p.GenderId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete or update
+            
 
-            // Configure AgeGroup relationship
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.AgeGroup)
-                .WithMany()
-                .HasForeignKey(p => p.AgeGroupId)
-                .OnDelete(DeleteBehavior.Restrict);
+            
             modelBuilder.Entity<Product>()
             .Property(g => g.Price)
             .HasColumnType("decimal(18, 2)");
 
             modelBuilder.Entity<Product>()
-                .Property(p => p.DiscountPrice)  // Specify precision and scale for DiscountPrice
+                .Property(p => p.Discount)  // Specify precision and scale for DiscountPrice
                 .HasColumnType("decimal(18, 2)");
 
             modelBuilder.Entity<Order>()
@@ -242,33 +231,7 @@ namespace DataAccess.Contexts
             );
 
 
-            // Seed data for Order entity
-            modelBuilder.Entity<Order>().HasData(
-                new Order
-                {
-                    Id = 1,  // Order ID
-                    UserId = 1,  // Link to existing user
-                    TotalQuantity = 3,
-                    TotalPrice = 150.50m,
-                    IsDiscountApplied = true,
-                    IsFullyrefunded = false,
-                    ShippingAddressId = 1,  // Link to existing shipping address
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Order
-                {
-                    Id = 2,  // Another Order ID
-                    UserId = 2,  // Link to another user
-                    TotalQuantity = 5,
-                    TotalPrice = 220.99m,
-                    IsDiscountApplied = false,
-                    IsFullyrefunded = false,
-                    ShippingAddressId = 2,  // Link to another shipping address
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                }
-            );
+            
             // Seed data for Seller entity
             modelBuilder.Entity<Seller>().HasData(
                 new Seller
@@ -289,31 +252,7 @@ namespace DataAccess.Contexts
                 }
             );
 
-            // Seed data for OrderDetail entity
-            modelBuilder.Entity<OrderDetail>().HasData(
-                new OrderDetail
-                {
-                    Id = 1,  // OrderDetail ID
-                    OrderId = 1,  // Link to existing order
-                    ProductId = 1,  // Link to existing product
-                    UnitPrice = 50.17m,
-                    Discount = 5.00m,
-                    IsRefunded = false,
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new OrderDetail
-                {
-                    Id = 2,  // Another OrderDetail ID
-                    OrderId = 2,  // Link to another order
-                    ProductId = 2,  // Link to another product
-                    UnitPrice = 75.99m,
-                    Discount = 0.00m,
-                    IsRefunded = false,
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                }
-            );
+            
 
             // Seed data for ShippingAddress entity
             modelBuilder.Entity<ShippingAddress>().HasData(
@@ -340,37 +279,7 @@ namespace DataAccess.Contexts
                     IsDeleted = false
                 }
             );
-            // Seed data for Size entity
-            modelBuilder.Entity<Size>().HasData(
-                new Size
-                {
-                    Id = 1,  // Size ID
-                    Name = "Small",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Size
-                {
-                    Id = 2,  // Another Size ID
-                    Name = "Medium",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Size
-                {
-                    Id = 3,  // Another Size ID
-                    Name = "Large",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Size
-                {
-                    Id = 4,  // Another Size ID
-                    Name = "Extra Large",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                }
-            );
+            
             // Seed data for AppUser entity
             modelBuilder.Entity<AppUser>().HasData(
                 new AppUser
@@ -405,135 +314,10 @@ namespace DataAccess.Contexts
                 }
             );
 
-            // Seed data for Product entity
-            modelBuilder.Entity<Product>().HasData(
-                new Product
-                {
-                    Id = 1,  // Product ID
-                    Name = "Men's Running Shoes",
-                    Description = "Lightweight running shoes for men.",
-                    Price = 75.00m,
-                    DiscountPrice = 65.00m,
-                    StockQuantity = 50,
-                    Condition = "New",
-                    GenderId = 1,
-                    AgeGroupId = 1,
-                    CategoryId = 1,  // Link to "Clothing" category
-                    BrandId = 1,  // Link to "Nike" brand
-                    SizeId = 1,  // Link to "Small" size
-                    Color = "Blue",
-                    PrimaryImageUrl = "/images/products/mens-running-shoes.jpg",
-                    SellerId = 1,  // Link to existing seller
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Product
-                {
-                    Id = 2,  // Another Product ID
-                    Name = "Women's Jacket",
-                    Description = "Stylish and warm jacket for women.",
-                    Price = 120.00m,
-                    DiscountPrice = 100.00m,
-                    StockQuantity = 30,
-                    Condition = "New",
-                    GenderId = 2,
-                    AgeGroupId = 1,
-                    CategoryId = 4,  // Link to "Women's Clothing" category
-                    BrandId = 2,  // Link to "Adidas" brand
-                    SizeId = 2,  // Link to "Medium" size
-                    Color = "Black",
-                    PrimaryImageUrl = "/images/products/womens-jacket.jpg",
-                    SellerId = 2,  // Link to another existing seller
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                }
-            );
-            // Seed data for Review entity
-            modelBuilder.Entity<Review>().HasData(
-                new Review
-                {
-                    Id = 1,  // Review ID
-                    ProductId = 1,  // Link to existing product
-                    UserId = 1,  // Link to existing user (John Doe)
-                    SellerId = 1,  // Link to existing seller (FashionHub)
-                    Rating = 5,
-                    Comment = "Excellent quality and fast shipping!",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                },
-                new Review
-                {
-                    Id = 2,  // Another Review ID
-                    ProductId = 2,  // Link to another existing product
-                    UserId = 2,  // Link to another existing user (Jane Doe)
-                    SellerId = 2,  // Link to another existing seller (StyleDepot)
-                    Rating = 4,
-                    Comment = "Great product, but the delivery took longer than expected.",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false
-                }
-            );
-            modelBuilder.Entity<Gender>().HasData(
-                new Gender
-                {
-                    Id = 1,
-                    GenderName ="Male",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-
-
-                },
-                new Gender
-                {
-                    Id = 2,
-                    GenderName = "Female",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-
-
-                },
-                new Gender
-                {
-                    Id = 3,
-                    GenderName = "Unisex",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-
-
-                },
-                new Gender
-                {
-                    Id = 4,
-                    GenderName = "Other",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-
-
-                }
-                );
-            modelBuilder.Entity<AgeGroup>().HasData(
-                new AgeGroup
-                {
-                    Id=1,
-                    Name="Adult",
-                    CreatedDate= DateTime.UtcNow,
-                    IsDeleted = false,
-                },
-                new AgeGroup
-                {
-                    Id = 2,
-                    Name = "Kid",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-                },
-                new AgeGroup
-                {
-                    Id = 3,
-                    Name = "Infant",
-                    CreatedDate = DateTime.UtcNow,
-                    IsDeleted = false,
-                }
-                );
+            
+            
+            
+            
 
             base.OnModelCreating(modelBuilder);
         }
