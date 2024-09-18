@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ProductItem from '../ProductItem.jsx';
 import { useLocation } from 'react-router-dom';
+import { getProducts, searchProducts } from '../../../services/api.js';
+import axios from "axios"; // Import API functions
 
-const ShopProductList = ({ selectedCategory, selectedBrand }) => {
+const ShopProductList = ({ selectedCategory, selectedBrand, onCategorySelect, onBrandSelect }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,31 +15,38 @@ const ShopProductList = ({ selectedCategory, selectedBrand }) => {
 
     useEffect(() => {
         setLoading(true); // Set loading before API call
-        let url = 'https://localhost:7051/api/Products';
+
+        let apiCall;
 
         if (searchTerm) {
-            url = `https://localhost:7051/api/Products/search?term=${searchTerm}`;
+            apiCall = searchProducts(searchTerm); // Search API call from api.js
         } else if (selectedCategory) {
-            url = `https://localhost:7051/api/Products/category/${selectedCategory}`;
+            apiCall = axios.get(`https://localhost:7051/api/Products/category/${selectedCategory}`);
         } else if (selectedBrand) {
-            url = `https://localhost:7051/api/Products/brand/${selectedBrand}?includeDeleted=false`;
+            apiCall = axios.get(`https://localhost:7051/api/Products/brand/${selectedBrand}?includeDeleted=false`);
+        } else {
+            apiCall = getProducts(); // General product list API call from api.js
         }
 
-        axios.get(url)
+        apiCall
             .then((response) => {
                 setProducts(response.data);
                 setLoading(false);
             })
             .catch((error) => {
                 if (error.response && error.response.status === 404) {
-                    // If the status is 404, treat it as no products found
-                    setProducts([]);
+                    setProducts([]); // Handle no products found
                 } else {
                     setError('An error occurred while fetching products.');
                 }
                 setLoading(false);
             });
     }, [searchTerm, selectedCategory, selectedBrand]);
+
+    const resetFilters = () => {
+        onCategorySelect(null);
+        onBrandSelect(null);
+    };
 
     if (loading) {
         return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading products...</div>;
@@ -52,7 +60,7 @@ const ShopProductList = ({ selectedCategory, selectedBrand }) => {
         return (
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 No products available in this category or brand. Please try another one.
-                <button onClick={() => window.history.back()} style={{ marginTop: '20px' }}>Go Back</button>
+                <button onClick={resetFilters} style={{ marginTop: '20px' }}>Reset Filters</button>
             </div>
         );
     }

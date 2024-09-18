@@ -6,6 +6,14 @@ import {useState} from "react";
 function Shop() {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [activeBrand, setActiveBrand] = useState(null);
+
+    const handleCategorySelect = (categoryId) => {
+        setSelectedCategory(categoryId); // Update the selected category state
+    };
+
+    const handleBrandSelect = (brandId) => {
+        setActiveBrand(brandId); // Update the selected brand state
+    };
     return (
         <section className="shop spad">
             <div className="container">
@@ -14,7 +22,8 @@ function Shop() {
                         <ShopSidebar onCategorySelect={setSelectedCategory} onBrandSelect={setActiveBrand}   />
                     </div>
                     <div className="col-lg-9">
-                        <ShopProductList selectedCategory={selectedCategory} selectedBrand={activeBrand} />
+                        <ShopProductList selectedCategory={selectedCategory} selectedBrand={activeBrand} onCategorySelect={handleCategorySelect}  // Pass the reset function
+                                         onBrandSelect={handleBrandSelect} />
                     </div>
                 </div>
             </div>
