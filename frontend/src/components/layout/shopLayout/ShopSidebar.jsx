@@ -6,7 +6,7 @@ import { getBrands, getCategories } from '../../../services/api.js';
 
 const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
     const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]); // Store brands separately
+    const [brands, setBrands] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeCategory, setActiveCategory] = useState(null);
@@ -21,7 +21,6 @@ const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching categories:', error);
                 setError('Error fetching categories');
                 setLoading(false);
             });
@@ -35,7 +34,6 @@ const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching brands:', error);
                 setError('Error fetching brands');
                 setLoading(false);
             });
@@ -46,8 +44,8 @@ const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
         onCategorySelect(categoryId);
     };
 
-    const handleBrandSelect = (brandId) => {
-        setActiveBrand(brandId);
+    const handleBrandSelect = (brandId, brandName) => {
+        setActiveBrand(brandName); // Store the selected brand name
         onBrandSelect(brandId);
     };
 
@@ -80,7 +78,7 @@ const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
     return (
         <div className="shop__sidebar">
             {/* Search Bar with Reset Button */}
-            <div className="search-bar-wrapper">
+            <div className="shop__sidebar__search">
                 <SearchBar value={searchTerm} onChange={handleSearchInput} />
                 {searchTerm && (
                     <button className="reset-search-btn" onClick={resetSearch}>
@@ -90,70 +88,81 @@ const ShopSidebar = ({ onCategorySelect, onBrandSelect }) => {
             </div>
 
             {/* Categories Section */}
-            <p className="categories-header">
-                <a className="btn" data-bs-toggle="collapse" href="#collapseCategories" role="button"
-                   aria-expanded="false" aria-controls="collapseCategories">
-                    CATEGORIES
-                    <span className="arrow">&#9662;</span>
-                </a>
-            </p>
-
-            <div className="collapse" id="collapseCategories">
-                <div className="card-body">
-                    <div className="shop__sidebar__categories">
-                        <ul className="nice-scroll">
-                            {categories.map((category) => (
-                                <li key={category.id}
-                                    className={`category-item ${activeCategory === category.id ? 'active' : ''}`}>
-                                    <a href="#" onClick={(e) => {
-                                        e.preventDefault();
-                                        handleCategorySelect(category.id);
-                                    }}>
-                                        {category.name}
-                                    </a>
-                                    {activeCategory === category.id && (
-                                        <button className="reset-btn" onClick={resetCategoryFilter}>
-                                            <FontAwesomeIcon icon={faCircleXmark} size="lg" />
-                                        </button>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+            <div className="shop__sidebar__accordion">
+                <div className="accordion" id="accordionExample">
+                    <div className="card">
+                        <div className="card-heading">
+                            <a data-bs-toggle="collapse" data-bs-target="#collapseCategories" aria-expanded="true">
+                                Categories
+                            </a>
+                        </div>
+                        <div id="collapseCategories" className="collapse show" data-bs-parent="#accordionExample">
+                            <div className="card-body">
+                                <div className="shop__sidebar__categories">
+                                    <ul className="nice-scroll">
+                                        {categories.map((category) => (
+                                            <li
+                                                key={category.id || category.name}
+                                                className={`category-item ${activeCategory === category.id ? 'active' : ''}`}>
+                                                <a href="#" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleCategorySelect(category.id);
+                                                }}>
+                                                    {category.name}
+                                                </a>
+                                                {activeCategory === category.id && (
+                                                    <button className="reset-btn" onClick={resetCategoryFilter}>
+                                                        <FontAwesomeIcon icon={faCircleXmark} size="lg" />
+                                                    </button>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            {/* Brands Section */}
-            <p className="brands-header">
-                <a className="btn" data-bs-toggle="collapse" href="#collapseBrands" role="button"
-                   aria-expanded="false" aria-controls="collapseBrands">
-                    BRANDS
-                    <span className="arrow">&#9662;</span>
-                </a>
-            </p>
-
-            <div className="collapse" id="collapseBrands">
-                <div className="card-body">
-                    <div className="shop__sidebar__brands">
-                        <ul className="nice-scroll">
-                            {brands.map((brand) => (
-                                <li key={brand.id}
-                                    className={`brand-item ${activeBrand === brand.id ? 'active' : ''}`}>
-                                    <a href="#" onClick={(e) => {
-                                        e.preventDefault();
-                                        handleBrandSelect(brand.id);
-                                    }}>
-                                        {brand.name}
-                                    </a>
-                                    {activeBrand === brand.id && (
-                                        <button className="reset-btn" onClick={resetBrandFilter}>
-                                            <FontAwesomeIcon icon={faCircleXmark} size="lg" />
-                                        </button>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+                    {/* Brands Section */}
+                    <div className="card">
+                        <div className="card-heading">
+                            <a data-bs-toggle="collapse" data-bs-target="#collapseBrands" aria-expanded="true">
+                                Brands
+                            </a>
+                        </div>
+                        <div id="collapseBrands" className="collapse show" data-bs-parent="#accordionExample">
+                            <div className="card-body">
+                                <div className="shop__sidebar__brand">
+                                    <ul className="nice-scroll">
+                                        {brands.map((brand) => (
+                                            <li
+                                                key={brand.id || brand.name}
+                                                className={`category-item ${activeBrand === brand.name ? 'active' : ''}`}>
+                                                <a href="#" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleBrandSelect(brand.id, brand.name);
+                                                }}>
+                                                    {brand.name}
+                                                </a>
+                                                {activeBrand === brand.name && (
+                                                    <button className="reset-btn" onClick={resetBrandFilter}>
+                                                        <FontAwesomeIcon icon={faCircleXmark} size="lg" />
+                                                    </button>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    {/* Display Selected Brand */}
+                    {activeBrand && (
+                        <div className="selected-brand">
+                            <p>Products for Brand {activeBrand}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

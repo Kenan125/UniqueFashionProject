@@ -3,7 +3,7 @@ import axios from 'axios';
 import ProductItem from '../ProductItem.jsx';
 import { useLocation } from 'react-router-dom';
 
-const ShopProductList = ({ selectedCategory }) => {
+const ShopProductList = ({ selectedCategory, selectedBrand }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,6 +20,8 @@ const ShopProductList = ({ selectedCategory }) => {
             url = `https://localhost:7051/api/Products/search?term=${searchTerm}`;
         } else if (selectedCategory) {
             url = `https://localhost:7051/api/Products/category/${selectedCategory}`;
+        } else if (selectedBrand) {
+            url = `https://localhost:7051/api/Products/brand/${selectedBrand}?includeDeleted=false`;
         }
 
         axios.get(url)
@@ -36,7 +38,7 @@ const ShopProductList = ({ selectedCategory }) => {
                 }
                 setLoading(false);
             });
-    }, [searchTerm, selectedCategory]);
+    }, [searchTerm, selectedCategory, selectedBrand]);
 
     if (loading) {
         return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading products...</div>;
@@ -49,7 +51,7 @@ const ShopProductList = ({ selectedCategory }) => {
     if (products.length === 0) {
         return (
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                No products available in this category. Please try another one.
+                No products available in this category or brand. Please try another one.
                 <button onClick={() => window.history.back()} style={{ marginTop: '20px' }}>Go Back</button>
             </div>
         );
@@ -79,7 +81,7 @@ const ShopProductList = ({ selectedCategory }) => {
 
             <div className="row">
                 {products.map((product) => (
-                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.name}>
+                    <div className="col-lg-4 col-md-6 col-sm-6" key={product.id}>
                         <ProductItem product={product} />
                     </div>
                 ))}

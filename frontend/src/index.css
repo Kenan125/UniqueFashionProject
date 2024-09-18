@@ -584,18 +584,26 @@ ol {
 .arrow.up {
     transform: rotate(180deg); /* Rotated for "up" arrow */
 }
-
+.shop__sidebar__categories {
+    overflow: hidden;
+    min-height: 200px; /* Set a minimum height to prevent overlap */
+}
 /* Styling for the category list */
 .shop__sidebar__categories ul {
     list-style: none;
-    padding: 0;
+
     margin: 0;
+    padding-bottom: 20px;
 }
 
 .shop__sidebar__categories li {
     padding: 5px 0;
 }
-
+.shop__sidebar__categories ul,
+.shop__sidebar__brand ul {
+    max-height: 200px; /* Limit height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
 .shop__sidebar__categories li a {
     color: #8a8a8a;
     font-size: 14px;
@@ -1328,7 +1336,10 @@ ol {
 .shop__sidebar__brand ul {
     height: 225px;
 }
-
+.shop__sidebar__brand {
+    margin-top: 20px; /* Add margin to the top of the brand section */
+    padding-top: 10px;
+}
 .shop__sidebar__categories ul li,
 .shop__sidebar__price ul li,
 .shop__sidebar__brand ul li {
