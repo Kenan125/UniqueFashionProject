@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getProducts } from '../../../services/api.js';
 import ProductItem from "../ProductItem.jsx";
