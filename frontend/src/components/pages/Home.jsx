@@ -1,4 +1,4 @@
-import React from 'react';
+
 import OwlCarousel from '../layout/homeLayout/OwlCarousel.jsx';
 import Banner from '../layout/homeLayout/Banner.jsx';
 import ProductSection from '../layout/homeLayout/ProductSection.jsx';

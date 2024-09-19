@@ -2,6 +2,7 @@
 using Entity.Dtos;
 using Entity.Dtos.FakeStoreDto;
 using Entity.Entities;
+using Entity.Identities;
 
 namespace Service.Mapping
 {
@@ -18,6 +19,7 @@ namespace Service.Mapping
             CreateMap<Review, ReviewDto>().ReverseMap();
             CreateMap<Seller, SellerDto>().ReverseMap();
             CreateMap<ShippingAddress, ShippingAddressDto>().ReverseMap();
+            CreateMap<AppUser, UserDto>().ReverseMap();
             
             // Map FakeStoreProductDto to Product
             CreateMap<FakeStoreProductDto, Product>()

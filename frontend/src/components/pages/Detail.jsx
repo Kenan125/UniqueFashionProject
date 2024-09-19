@@ -51,7 +51,7 @@ const Detail = () => {
                                 <div className="col-lg-8">
                                     <ProductDetails product={product} />
                                     <ProductOptions product={product} />
-                                    <ProductActions product={product} />
+                                    <ProductActions product={product} maxQuantity={product.stockQuantity} />
                                     <ProductTabs product={product} />
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ namespace Entity.Identities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? ProfilePictureUrl { get; set; }
-        public int GenderId { get; set; }
+        public string? Gender { get; set; }
 
         
         public ICollection<Order> Orders { get; set; }

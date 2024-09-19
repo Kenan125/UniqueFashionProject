@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from 'react-router-dom';
 
 const Breadcrumb = () => {
@@ -9,7 +8,10 @@ const Breadcrumb = () => {
     if (location.pathname === '/') {
         return null;
     }
-
+// Don't show breadcrumb on the detail page
+    if (location.pathname.startsWith('/detail')) {
+        return null;
+    }
     const createBreadcrumbLinks = () => {
         return path.map((segment, index) => {
             const link = `/${path.slice(0, index + 1).join('/')}`;

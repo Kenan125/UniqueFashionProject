@@ -133,5 +133,29 @@ namespace Service.Services
 
             return "/images/" + newFileName;
         }
+        public async Task<string> UpdateUserAsync(UserDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id.ToString());
+            if (user == null) return "User not found";
+
+            // Update user details
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.Email = userDto.Email;
+            user.UserName = userDto.UserName;
+            user.PhoneNumber = userDto.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            return result.Succeeded ? "OK" : string.Join(", ", result.Errors.Select(e => e.Description));
+        }
+
+        public async Task<string> DeleteUserAsync(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null) return "User not found";
+
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded ? "OK" : string.Join(", ", result.Errors.Select(e => e.Description));
+        }
     }
 }

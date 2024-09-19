@@ -22,7 +22,7 @@ function Header() {
                         <div className="col-lg-6 col-md-5">
                             <div className="header__top__right">
                                 <div className="header__top__links">
-                                    <NavLink to="/signin">Sign in</NavLink>
+                                    <NavLink to="/login">Log in</NavLink>
                                     <NavLink to="/register">Register</NavLink>
                                 </div>
                                 {/* Additional top hover items if needed */}
