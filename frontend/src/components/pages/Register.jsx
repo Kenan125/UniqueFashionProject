@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../css/Auth.module.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"; // Scoped CSS import
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         userName: '',
-        phoneNumber: '',
         email: '',
         password: '',
         confirmPassword: '',
         profilePicture: null,
-        gender: 'Not Specified', // Default to "Not Specified"
+        gender: 'Not Specified',
     });
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
+    const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -39,16 +37,14 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formDataToSend = new FormData();
         formDataToSend.append("firstName", formData.firstName);
         formDataToSend.append("lastName", formData.lastName);
         formDataToSend.append("userName", formData.userName);
-        formDataToSend.append("phoneNumber", formData.phoneNumber);
         formDataToSend.append("email", formData.email);
         formDataToSend.append("password", formData.password);
         formDataToSend.append("confirmPassword", formData.confirmPassword);
-        formDataToSend.append("gender", formData.gender); // Add gender
+        formDataToSend.append("gender", formData.gender);
 
         if (formData.profilePicture) {
             formDataToSend.append("profilePicture", formData.profilePicture);
@@ -61,7 +57,7 @@ const Register = () => {
             });
 
             if (response.ok) {
-                navigate('/login'); // Redirect to login on successful registration
+                navigate('/login');
             } else {
                 const data = await response.json();
                 console.error(data.message || 'Failed to register');
@@ -70,6 +66,7 @@ const Register = () => {
             console.error('Error during registration:', error);
         }
     };
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -77,6 +74,7 @@ const Register = () => {
     const toggleConfirmPasswordVisibility = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
+
     return (
         <section className={styles['auth-body']}>
             <div className={styles['auth-container']}>
@@ -84,8 +82,6 @@ const Register = () => {
                     <p>Registration</p>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    {success && <div className="alert alert-success">Registration successful! Redirecting to login...</div>}
                     <div className={styles.user_details}>
                         <div className={styles.input_box}>
                             <label>First Name</label>
@@ -120,7 +116,6 @@ const Register = () => {
                                 required
                             />
                         </div>
-
                         <div className={styles.input_box}>
                             <label>Email</label>
                             <input
@@ -136,7 +131,7 @@ const Register = () => {
                             <label>Password</label>
                             <div className={styles.password_container}>
                                 <input
-                                    type={showPassword ? 'text' : 'password'} // Toggle between "text" and "password"
+                                    type={showPassword ? 'text' : 'password'}
                                     name="password"
                                     placeholder="Enter your password"
                                     value={formData.password}
@@ -144,7 +139,7 @@ const Register = () => {
                                     required
                                 />
                                 <span onClick={togglePasswordVisibility} className={styles.eye_icon}>
-                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                                 </span>
                             </div>
                         </div>
@@ -152,7 +147,7 @@ const Register = () => {
                             <label>Confirm Password</label>
                             <div className={styles.password_container}>
                                 <input
-                                    type={showConfirmPassword ? 'text' : 'password'} // Toggle between "text" and "password"
+                                    type={showConfirmPassword ? 'text' : 'password'}
                                     name="confirmPassword"
                                     placeholder="Confirm your password"
                                     value={formData.confirmPassword}
@@ -160,7 +155,7 @@ const Register = () => {
                                     required
                                 />
                                 <span onClick={toggleConfirmPasswordVisibility} className={styles.eye_icon}>
-                                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye}/>
+                                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                                 </span>
                             </div>
                         </div>
@@ -179,11 +174,11 @@ const Register = () => {
                         </div>
                         <div className={styles.input_box}>
                             <label>Profile Picture (Optional)</label>
-                            <input type="file" name="profilePicture" onChange={handleFileChange}/>
+                            <input type="file" name="profilePicture" onChange={handleFileChange} />
                         </div>
                     </div>
                     <div className={styles.reg_btn}>
-                        <input type="submit" value="Register"/>
+                        <input type="submit" value="Register" />
                     </div>
                     <div className="text-center mt-3">
                         <p>
