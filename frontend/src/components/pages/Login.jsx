@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../../css/Auth.module.css';
 
 const Login = () => {
@@ -7,16 +7,42 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleSubmit = (e) => {
+    // Get the previous page URL or use "/" if none exists
+    const from = location.state?.from || '/';
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Implement your login logic here (API call)
-        navigate('/'); // Redirect on successful login
+        const loginData = { userName, password };
+
+        try {
+            const response = await fetch('https://localhost:7051/api/Auths/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token); // Store JWT token
+                localStorage.setItem('username', userName); // Store username
+
+                // Redirect to the previous page or "/"
+                navigate(from, { replace: true });
+            } else {
+                console.error('Login failed');
+            }
+        } catch (err) {
+            console.error('An error occurred during login', err);
+        }
     };
 
     return (
-        <section className={styles['auth-body']}> {/* Applied the scoped body style */}
-            <div className={styles['auth-container']}> {/* Updated class names */}
+        <section className={styles['auth-body']}>
+            <div className={styles['auth-container']}>
                 <div className={styles.title}>
                     <p>Login</p>
                 </div>
