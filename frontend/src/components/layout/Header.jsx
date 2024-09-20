@@ -57,7 +57,7 @@ function Header() {
                                             </button>
                                             <ul className="dropdown-menu">
                                                 <li>
-                                                    <NavLink className="dropdown-item" to="/account">
+                                                    <NavLink className="dropdown-item" to="/account" style={{ color: '#000' }}>
                                                         My Account
                                                     </NavLink>
                                                 </li>
