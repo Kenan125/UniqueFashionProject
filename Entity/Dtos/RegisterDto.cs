@@ -17,8 +17,9 @@ namespace Entity.Dtos
         [Required(ErrorMessage = "Username cannot be empty!")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
-        [Required(ErrorMessage = "Phone number cannot be empty!")]
-        public string PhoneNumber { get; set; }
+        
+        
+        public string Gender { get; set; }
         [Required(ErrorMessage = "Email address cannot be empty!")]
         [EmailAddress(ErrorMessage = "Invalid email format!")]
         public string Email { get; set; }

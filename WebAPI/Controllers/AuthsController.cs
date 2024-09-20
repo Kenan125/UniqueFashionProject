@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             return Ok(new { token });
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerRequest)
+        public async Task<IActionResult> Register([FromForm] RegisterDto registerRequest)
         {
             if (!ModelState.IsValid)
             {

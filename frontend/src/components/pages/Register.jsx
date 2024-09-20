@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../../css/Auth.module.css'; // Scoped CSS import
+import styles from '../../css/Auth.module.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"; // Scoped CSS import
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,7 +14,12 @@ const Register = () => {
         password: '',
         confirmPassword: '',
         profilePicture: null,
+        gender: 'Not Specified', // Default to "Not Specified"
     });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -30,19 +37,55 @@ const Register = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Implement your registration logic here (API call)
-        navigate('/login'); // Redirect to login on successful registration
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("firstName", formData.firstName);
+        formDataToSend.append("lastName", formData.lastName);
+        formDataToSend.append("userName", formData.userName);
+        formDataToSend.append("phoneNumber", formData.phoneNumber);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("password", formData.password);
+        formDataToSend.append("confirmPassword", formData.confirmPassword);
+        formDataToSend.append("gender", formData.gender); // Add gender
+
+        if (formData.profilePicture) {
+            formDataToSend.append("profilePicture", formData.profilePicture);
+        }
+
+        try {
+            const response = await fetch('https://localhost:7051/api/Auths/register', {
+                method: 'POST',
+                body: formDataToSend,
+            });
+
+            if (response.ok) {
+                navigate('/login'); // Redirect to login on successful registration
+            } else {
+                const data = await response.json();
+                console.error(data.message || 'Failed to register');
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+        }
+    };
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
     return (
-        <section className={styles['auth-body']}> {/* Scoped class for body */}
-            <div className={styles['auth-container']}> {/* Scoped class for container */}
+        <section className={styles['auth-body']}>
+            <div className={styles['auth-container']}>
                 <div className={styles.title}>
                     <p>Registration</p>
                 </div>
                 <form onSubmit={handleSubmit}>
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    {success && <div className="alert alert-success">Registration successful! Redirecting to login...</div>}
                     <div className={styles.user_details}>
                         <div className={styles.input_box}>
                             <label>First Name</label>
@@ -77,17 +120,7 @@ const Register = () => {
                                 required
                             />
                         </div>
-                        <div className={styles.input_box}>
-                            <label>Phone Number</label>
-                            <input
-                                type="text"
-                                name="phoneNumber"
-                                placeholder="Enter your phone number"
-                                value={formData.phoneNumber}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
+
                         <div className={styles.input_box}>
                             <label>Email</label>
                             <input
@@ -101,37 +134,60 @@ const Register = () => {
                         </div>
                         <div className={styles.input_box}>
                             <label>Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
-                            />
+                            <div className={styles.password_container}>
+                                <input
+                                    type={showPassword ? 'text' : 'password'} // Toggle between "text" and "password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    value={formData.password}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <span onClick={togglePasswordVisibility} className={styles.eye_icon}>
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
+                                </span>
+                            </div>
                         </div>
                         <div className={styles.input_box}>
                             <label>Confirm Password</label>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Confirm your password"
-                                value={formData.confirmPassword}
+                            <div className={styles.password_container}>
+                                <input
+                                    type={showConfirmPassword ? 'text' : 'password'} // Toggle between "text" and "password"
+                                    name="confirmPassword"
+                                    placeholder="Confirm your password"
+                                    value={formData.confirmPassword}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                                <span onClick={toggleConfirmPasswordVisibility} className={styles.eye_icon}>
+                                    <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye}/>
+                                </span>
+                            </div>
+                        </div>
+                        <div className={styles.input_box}>
+                            <label>Gender</label>
+                            <select
+                                name="gender"
+                                value={formData.gender}
                                 onChange={handleInputChange}
                                 required
-                            />
+                            >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Not Specified">Not Specified</option>
+                            </select>
                         </div>
                         <div className={styles.input_box}>
                             <label>Profile Picture (Optional)</label>
-                            <input type="file" name="profilePicture" onChange={handleFileChange} />
+                            <input type="file" name="profilePicture" onChange={handleFileChange}/>
                         </div>
                     </div>
                     <div className={styles.reg_btn}>
-                        <input type="submit" value="Register" />
+                        <input type="submit" value="Register"/>
                     </div>
                     <div className="text-center mt-3">
                         <p>
-                            Have an Account?{' '}
+                            Already have an account?&nbsp;
                             <a href="/login" className="text-danger">
                                 Login
                             </a>

@@ -39,7 +39,7 @@ namespace Service.Services
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
+                
                 UserName = model.UserName,
                 ProfilePictureUrl = model.ProfilePictureUrl // Assuming this is included in RegisterViewModel
             };
