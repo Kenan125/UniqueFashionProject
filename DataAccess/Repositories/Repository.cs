@@ -63,13 +63,27 @@ namespace DataAccess.Repositories
         }
 
         // Get an entity by filter
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
+        public async Task<T> GetAsync(
+    Expression<Func<T, bool>> filter = null,
+    params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
+
+            // Apply eager loading for includes
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            // Apply filter if provided
             if (filter != null)
             {
                 query = query.Where(filter);
             }
+
             return await query.FirstOrDefaultAsync();
         }
 

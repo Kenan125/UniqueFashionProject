@@ -1,6 +1,4 @@
-﻿using Entity.Entities;
-
-namespace Entity.Dtos
+﻿namespace Entity.Dtos
 {
     public class ProductDto
     {
@@ -17,7 +15,7 @@ namespace Entity.Dtos
         public int CategoryId { get; set; }
 
         public int BrandId { get; set; }
-        
+
         public string Color { get; set; }
         public string PrimaryImageUrl { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();

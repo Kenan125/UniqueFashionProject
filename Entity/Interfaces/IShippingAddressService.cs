@@ -11,6 +11,7 @@ namespace Entity.Interfaces
     {
         Task CreateShippingAddressAsync(ShippingAddressDto model);
         Task<ShippingAddressDto> GetShippingAddressByIdAsync(int addressId);
+        Task<ShippingAddressDto> GetShippingAddressByUserIdAsync(int userId);
         Task UpdateShippingAddressAsync(ShippingAddressDto model);
         Task DeleteShippingAddressAsync(int addressId);
     }

@@ -16,7 +16,9 @@ namespace Entity.Interfaces
         );
 
         Task<T> GetByIdAsync(int id);
-        Task<T> GetAsync(Expression<Func<T, bool>> filter);
+        Task<T> GetAsync(
+    Expression<Func<T, bool>> filter = null,
+    params Expression<Func<T, object>>[] includes);
 
         Task AddAsync(T entity);
         Task<int> UpdateAsync(T entity);

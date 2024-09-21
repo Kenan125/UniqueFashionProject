@@ -1,4 +1,6 @@
-﻿using Entity.Dtos;
+﻿using AutoMapper;
+using DataAccess.Contexts;
+using Entity.Dtos;
 using Entity.Entities;
 using Entity.Interfaces;
 using System;
@@ -11,6 +13,15 @@ namespace Service.Services
 {
     public class CartService : ICartService
     {
+        private readonly UniqueFashionDbContext _context;
+        private readonly IMapper _mapper;
+
+        public CartService(UniqueFashionDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
         public Task AddToCartAsync(int userId, int gameId, decimal price)
         {
             throw new NotImplementedException();
