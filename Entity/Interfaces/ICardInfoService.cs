@@ -12,5 +12,6 @@ namespace Entity.Interfaces
         Task<CardInfoDto> GetCardByUserIdAsync(int userId);  // Fetch card by user
         Task AddCardAsync(CardInfoDto model);  // Add new card info       
         Task DeleteCardAsync(int userId);  // Remove card info by user
+        Task<IEnumerable<CardInfoDto>> GetAllCardInfosByUserIdAsync(int userId);
     }
 }

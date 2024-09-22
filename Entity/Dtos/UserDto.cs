@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Entity.Dtos
@@ -19,9 +20,12 @@ namespace Entity.Dtos
         public string? ProfilePictureUrl { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
 
-        public ICollection<OrderDto> Orders { get; set; }
-        public ICollection<ReviewDto> Reviews { get; set; }
-        public ICollection<ShippingAddressDto> ShippingAddresses { get; set; }
+        //public ICollection<OrderDto> Orders { get; set; }
+        //public ICollection<ReviewDto> Reviews { get; set; }
+        //[JsonIgnore]
+        //public ICollection<ShippingAddressDto> ShippingAddresses { get; set; }
+        //[JsonIgnore]  // Prevent serialization to avoid circular reference
+        //public ICollection<CardInfoDto> CardInfos { get; set; }
 
 
     }

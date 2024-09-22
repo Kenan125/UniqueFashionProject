@@ -1,8 +1,10 @@
 ﻿using Entity.Dtos;
 using Entity.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Service.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -19,16 +21,29 @@ namespace WebAPI.Controllers
             _accountService = accountService;
         }
 
+        // New Token Generation Endpoint
+        [HttpGet]
+        public IActionResult Login()
+        {
+            //Frontend'de bulunan projeden gelen kullanıcı bilgilerini kontrol ettikten sonra token üretir ve gönderir.
+            return Created("", _authService.GenerateToken());
+        }
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginRequest)
         {
             var token = await _authService.AuthenticateAsync(loginRequest.UserName, loginRequest.Password);
-            if (token == null) 
+            if (token == null)
             {
                 return Unauthorized();
             }
-            return Ok(new { token });
+
+            // Get the userId by username
+            var userId = await _authService.GetUserIdByUserNameAsync(loginRequest.UserName);
+
+            return Ok(new { token, userId });
         }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm] RegisterDto registerRequest)
         {
@@ -47,62 +62,7 @@ namespace WebAPI.Controllers
             // Return a Bad Request response with the error messages if registration fails
             return BadRequest(new { message = result });
         }
-        // GET USER BY ID
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int id)
-        {
-            var user = await _accountService.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound(new { message = "User not found." });
-            }
-            return Ok(user);
-        }
-        // EDIT USER (UPDATE)
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(int id, [FromBody] UserDto userUpdateRequest)
-        {
-            var user = await _accountService.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound(new { message = "User not found." });
-            }
 
-            // Update the user details
-            user.FirstName = userUpdateRequest.FirstName;
-            user.LastName = userUpdateRequest.LastName;
-            user.Email = userUpdateRequest.Email;
-            user.PhoneNumber = userUpdateRequest.PhoneNumber;
-            user.UserName = userUpdateRequest.UserName;
-
-            // Optionally handle password or other sensitive data here
-
-            var updateResult = await _accountService.UpdateUserAsync(user);
-            if (updateResult == "OK")
-            {
-                return Ok(new { message = "User updated successfully." });
-            }
-
-            return BadRequest(new { message = updateResult });
-        }
-
-        // DELETE USER (SOFT DELETE)
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _accountService.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound(new { message = "User not found." });
-            }
-
-            var deleteResult = await _accountService.DeleteUserAsync(id);
-            if (deleteResult == "OK")
-            {
-                return Ok(new { message = "User deleted successfully." });
-            }
-
-            return BadRequest(new { message = deleteResult });
-        }
+        
     }
 }

@@ -42,26 +42,37 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState); // This will help if something is missing from the model
             }
 
-            var order = new Order
+            try
             {
-                UserId = model.UserId,
-                TotalQuantity = model.TotalQuantity,
-                TotalPrice = model.TotalPrice,
-                IsDiscountApplied = model.IsDiscountApplied,
-                ShippingAddressId = model.ShippingAddressId
-            };
+                var order = new Order
+                {
+                    UserId = model.UserId,
+                    TotalQuantity = model.TotalQuantity,
+                    TotalPrice = model.TotalPrice,
+                    IsDiscountApplied = model.IsDiscountApplied,
+                    ShippingAddressId = model.ShippingAddressId // Make sure this field is not null if required
+                };
 
-            await _orderService.CreateOrderAsync(order);
-            return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
+                await _orderService.CreateOrderAsync(order);
+
+                return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging
+                Console.WriteLine($"Error creating order: {ex.Message}");
+                return StatusCode(500, "An error occurred while creating the order.");
+            }
         }
 
-        
 
-       
-        
+
+
+
+
 
         // GET: api/orders/user/{userId}
         [HttpGet("user/{userId}")]

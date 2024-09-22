@@ -24,7 +24,6 @@ namespace Service.Services
         public async Task<string> AuthenticateAsync(string userName, string password)
         {
             var user = await _userManager.FindByNameAsync(userName);
-
             if (user == null || !await _userManager.CheckPasswordAsync(user, password))
             {
                 return null; // Invalid credentials
@@ -36,34 +35,37 @@ namespace Service.Services
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            // Here we add roles (Admin, Seller, User, etc.) if necessary
-            var roles = await _userManager.GetRolesAsync(user);
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
             // Generate JWT token
-            return GenerateToken(claims);
+            return GenerateToken();
         }
 
-        public string GenerateToken(List<Claim> claims)
+        public string GenerateToken()
         {
-            var jwtDefaults = _configuration.GetSection("Jwt");
-            var secretKey = jwtDefaults["Key"];
+            var jwtDefaults = _configuration.GetSection("JwtDefaults");
+            var secretKey = jwtDefaults["SecretKey"];
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer: jwtDefaults["Issuer"],
-                audience: jwtDefaults["Audience"],
-                claims: claims,
-                notBefore: DateTime.Now,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtDefaults["ExpireMinutes"])),
-                signingCredentials: signingCredentials
-            );
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Role, "Admin")
+            };
+
+            JwtSecurityToken token = new JwtSecurityToken(issuer: jwtDefaults["ValidIssuer"], audience: jwtDefaults["ValidAudience"], claims: claims, notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtDefaults["expires"])), signingCredentials: signingCredentials);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             return handler.WriteToken(token);
+        }
+        public async Task<string> GetUserIdByUserNameAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                return user.Id.ToString();
+            }
+            return null;
         }
     }
 }

@@ -24,6 +24,11 @@ namespace Service.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+        public async Task<IEnumerable<CardInfoDto>> GetAllCardInfosByUserIdAsync(int userId)
+        {
+            var cards = await _unitOfWork.GetRepository<CardInfo>().GetAllAsync(ci => ci.UserId == userId);
+            return _mapper.Map<IEnumerable<CardInfoDto>>(cards);
+        }
 
         public async Task AddCardAsync(CardInfoDto model)
         {

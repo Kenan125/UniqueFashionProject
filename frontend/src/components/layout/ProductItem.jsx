@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import {addToCart} from "../../services/cartUtils.js";
 
 const ProductItem = ({ product }) => {
     const navigate = useNavigate();
@@ -9,6 +10,19 @@ const ProductItem = ({ product }) => {
     const handleProductClick = () => {
         // Navigate to the details page with the product ID
         navigate(`/detail/${product.id}`);
+    };
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation(); // Prevent the click event from going to the product detail
+        addToCart(product);
+        // Optionally, you can show a notification or toast here
+    };
+
+    const handleAddToCartAndNavigate = (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        e.stopPropagation(); // Prevent parent click handlers
+        addToCart(product);
+        navigate('/cart');
     };
 
     return (
@@ -31,10 +45,7 @@ const ProductItem = ({ product }) => {
                                 borderRadius: '5px',
                                 border: 'none',
                             }}
-                            onClick={(e) => {
-                                e.stopPropagation(); // Prevent the click event from going to the product detail
-                                // Add to cart logic here
-                            }}
+                            onClick={handleAddToCart}
                         >
                             <FontAwesomeIcon icon={faCartPlus} style={{ color: '#23385c' }} />
                         </button>
@@ -43,11 +54,15 @@ const ProductItem = ({ product }) => {
             </div>
             <div className="product__item__text">
                 <h6>{product.name}</h6>
-                <a href="#" className="add-cart" onClick={(e) => e.preventDefault()}>
+                <a href="#" className="add-cart" onClick={handleAddToCartAndNavigate}>
                     + Add To Cart
                 </a>
                 <h5>${product.price.toFixed(2)}</h5>
-                {product.discountPrice && <p><strong>Discount Price:</strong> ${product.discountPrice.toFixed(2)}</p>}
+                {product.discountPrice && (
+                    <p>
+                        <strong>Discount Price:</strong> ${product.discountPrice.toFixed(2)}
+                    </p>
+                )}
             </div>
         </div>
     );

@@ -14,5 +14,6 @@ namespace Entity.Interfaces
         Task<ShippingAddressDto> GetShippingAddressByUserIdAsync(int userId);
         Task UpdateShippingAddressAsync(ShippingAddressDto model);
         Task DeleteShippingAddressAsync(int addressId);
+        Task<IEnumerable<ShippingAddressDto>> GetAllShippingAddressesByUserIdAsync(int userId);
     }
 }

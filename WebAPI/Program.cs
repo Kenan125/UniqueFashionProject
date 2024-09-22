@@ -8,12 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddControllers()
-        .AddNewtonsoftJson(options =>
-        {
-            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
-        });
+
+        
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<UniqueFashionDbContext>(options =>
 {
@@ -54,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthentication();

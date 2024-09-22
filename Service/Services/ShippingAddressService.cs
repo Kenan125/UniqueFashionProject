@@ -21,6 +21,11 @@ namespace Service.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        public async Task<IEnumerable<ShippingAddressDto>> GetAllShippingAddressesByUserIdAsync(int userId)
+        {
+            var addresses = await _unitOfWork.GetRepository<ShippingAddress>().GetAllAsync(sa => sa.UserId == userId);
+            return _mapper.Map<IEnumerable<ShippingAddressDto>>(addresses);
+        }
 
         public async Task CreateShippingAddressAsync(ShippingAddressDto model)
         {

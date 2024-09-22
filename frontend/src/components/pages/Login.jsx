@@ -30,6 +30,13 @@ const Login = () => {
                 localStorage.setItem('token', data.token); // Store JWT token
                 localStorage.setItem('username', userName); // Store username
 
+                // Store userId from response
+                if (data.userId) {
+                    localStorage.setItem('userId', data.userId);
+                } else {
+                    console.error('Login response did not include userId');
+                }
+
                 // Redirect to the previous page or "/"
                 navigate(from, { replace: true });
             } else {

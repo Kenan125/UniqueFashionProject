@@ -18,7 +18,7 @@ namespace Entity.Dtos
         public int ShippingAddressId { get; set; }
 
         //public virtual ShippingAddressDto ShippingAddress { get; set; }
-        public virtual List<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
+        //public virtual List<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
         //public virtual UserDto User { get; set; }
     }
 }

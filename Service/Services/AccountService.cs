@@ -110,7 +110,7 @@ namespace Service.Services
             }
 
             // Generate JWT token
-            var token = _authService.GenerateToken(claims);
+            var token = _authService.GenerateToken();
             return token;
         }
 

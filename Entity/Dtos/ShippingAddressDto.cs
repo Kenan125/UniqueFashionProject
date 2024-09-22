@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entity.Dtos
 {
-    public class ShippingAddressDto : BaseDto
+    public class ShippingAddressDto 
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
-        public UserDto User { get; set; }
+        //public UserDto User { get; set; }
         public string AddressLine { get; set; }
         public string District { get; set; }
         public string City { get; set; }

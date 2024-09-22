@@ -15,7 +15,7 @@ namespace Entity.Dtos
         public decimal Discount { get; set; }
         public bool IsRefunded { get; set; }
 
-        public virtual OrderDto Order { get; set; }
-        public virtual ProductDto Product { get; set; }
+        //public virtual OrderDto Order { get; set; }
+        //public virtual ProductDto Product { get; set; }
     }
 }
